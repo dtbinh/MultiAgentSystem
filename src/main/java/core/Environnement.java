@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Environnement {
+
+	protected Systeme systeme;
 	protected Agent[][] grille;
 	protected int tailleX;
 	protected int tailleY;
 	protected boolean isTore;
-	protected Systeme systeme;
 
-	public Environnement(int tailleX, int tailleY) {
+	public Environnement(int tailleX, int tailleY, boolean isTore) {
 		this.tailleX = tailleX;
-		isTore = true;
 		this.tailleY = tailleY;
+		this.isTore = isTore;
+
 		grille = new Agent[tailleX][tailleY];
-		initEnv();
+
+		remplirGrilleAvecCasesVides();
 	}
 
-	private void initEnv() {
+	private void remplirGrilleAvecCasesVides() {
 		for (int x = 0; x < tailleX; x++) {
 			for (int y = 0; y < tailleY; y++) {
 				grille[x][y] = new Vide(x, y, this);
@@ -27,6 +30,7 @@ public class Environnement {
 	}
 
 	public void move(Agent from, Agent to) {
+
 		grille[to.posX][to.posY] = from;
 		grille[from.posX][from.posY] = new Vide(from.posX, from.posY, this);
 		from.posX = to.posX;

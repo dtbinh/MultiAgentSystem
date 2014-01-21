@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 import core.Agent;
 import core.Environnement;
 import core.Vide;
@@ -19,49 +17,49 @@ public class Shark extends Agent {
 
 	@Override
 	public void action() {
-		if (isDead) {
-			systeme.toDelete(this);
+
+		if (isStarved()) {
+			die();
 			return;
 		}
+
+		leftTimeToReproduce--;
+		leftTimeToEat--;
+		age++;
+
 		List<Agent> voisins = environnement.getVoisins(posX, posY);
 		Collections.shuffle(voisins);
 		Agent toEat = null;
 		Agent toMove = null;
-		for (Agent s : voisins) {
-			if (s instanceof Shark) {
-				toEat = s;
+		for (Agent voisin : voisins) {
+			if (voisin instanceof Tuna) {
+				toEat = voisin;
+				break;
 			}
-			if (s instanceof Vide) {
-				toMove = s;
+			if (voisin instanceof Vide) {
+				toMove = voisin;
 			}
 		}
 
 		if (canMove(toEat)) {
 			if (canReproduce()) {
-				seReproduire(toEat);
-			} else {
-				mange(toEat);
-				leftTimeToReproduce--;
+				reproduce(toEat);
 			}
+			eat(toEat);
+			move(toEat);
 		} else {
-			if (isStarved()) {
-				isDead = true;
-				systeme.toDelete(this);
-				return;
-			}
 			if (canMove(toMove)) {
 				if (canReproduce()) {
-					seReproduire(toMove);
-				} else {
-					leftTimeToReproduce--;
-					environnement.move(this, toMove);
+					reproduce(toMove);
 				}
-			} else {
-				leftTimeToReproduce--;
+				move(toMove);
 			}
 		}
-		age++;
 
+	}
+
+	private void die() {
+		systeme.addToDeleteList(this);
 	}
 
 	private boolean canReproduce() {
@@ -77,19 +75,26 @@ public class Shark extends Agent {
 	}
 
 	@Override
-	protected void seReproduire(Agent toMove) {
+	protected void reproduce(Agent toMove) {
 		Agent shark = new Shark(posX, posY, environnement, TIME_TO_DIE,
 				TIME_TO_REPRODUCE, TIME_TO_EAT);
+		systeme.addToAddList(shark);
+
 		leftTimeToReproduce = TIME_TO_REPRODUCE;
+	}
+
+	private void move(Agent toMove) {
 		environnement.move(this, toMove);
-		systeme.toAdd(shark);
 	}
 
-	public void mange(Agent a) {
+	public void eat(Agent agent) {
+
 		leftTimeToEat = TIME_TO_EAT;
-		environnement.move(this, a);
-		a.setDead(true);
-		systeme.toDelete(a);
-	}
 
+		agent.setDead(true);
+
+		systeme.addToDeleteList(agent);
+		systeme.setCellWithAgent(posX, posY,
+				new Vide(posX, posY, environnement));
+	}
 }

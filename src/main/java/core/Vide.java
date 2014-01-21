@@ -19,7 +19,7 @@ public class Vide extends Agent {
 	}
 
 	@Override
-	protected void seReproduire(Agent a) {
+	protected void reproduce(Agent a) {
 
 	}
 }

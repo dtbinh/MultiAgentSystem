@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 
@@ -68,7 +67,7 @@ public abstract class Agent {
 		return false;
 	}
 
-	protected abstract void seReproduire(Agent a);
+	protected abstract void reproduce(Agent a);
 
 	public void setDead(boolean b) {
 		isDead = b;

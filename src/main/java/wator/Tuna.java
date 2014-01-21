@@ -17,37 +17,56 @@ public class Tuna extends Agent {
 
 	@Override
 	public void action() {
+
 		if (isDead) {
-			systeme.toDelete(this);
 			return;
 		}
+
+		--leftTimeToReproduce;
+
 		List<Agent> voisins = environnement.getVoisins(posX, posY);
 		Collections.shuffle(voisins);
-		Agent toMove = null;
-		for (Agent s : voisins) {
-			if (s instanceof Vide) {
-				toMove = s;
+
+		Agent agentToMove = null;
+		for (Agent voisin : voisins) {
+			if (voisinEstCaseVide(voisin)) {
+				agentToMove = voisin;
 				break;
 			}
 		}
-		if (toMove != null) {
-			--leftTimeToReproduce;
-			if (leftTimeToReproduce <= 0) {
-				seReproduire(toMove);
-			} else {
-				environnement.move(this, toMove);
-			}
+
+		if (canMove(agentToMove)) {
+			reproduceAndMoveOrOnlyMove(agentToMove);
 		}
 
 	}
 
+	private boolean voisinEstCaseVide(Agent voisin) {
+		return voisin instanceof Vide;
+	}
+
+	private void reproduceAndMoveOrOnlyMove(Agent toMove) {
+		if (canReproduce()) {
+			reproduce(toMove);
+		} else {
+			environnement.move(this, toMove);
+		}
+	}
+
+	private boolean canReproduce() {
+		return leftTimeToReproduce <= 0;
+	}
+
+	private boolean canMove(Agent toMove) {
+		return toMove != null;
+	}
+
 	@Override
-	protected void seReproduire(Agent toMove) {
+	protected void reproduce(Agent toMove) {
 		Agent tuna = new Tuna(posX, posY, environnement, TIME_TO_DIE,
 				TIME_TO_REPRODUCE, TIME_TO_EAT);
 		environnement.move(this, toMove);
-		systeme.toAdd(tuna);
-
+		systeme.addToAddList(tuna);
 	}
 
 }

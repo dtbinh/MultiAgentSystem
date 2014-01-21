@@ -8,28 +8,29 @@ import core.Systeme;
 import core.Vue;
 
 public class Wator {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
-		int tailleEnvX = 5, tailleEnvY = 5;
+		int tailleEnvX = 50, tailleEnvY = 50;
 		int dieS = 25;
-		int reproduceS = 15;
-		int eatS = 1000;
-		int shark = 9;
+		int reproduceS = 7;
+		int eatS = 7;
+		int shark = 15;
 
 		int dieT = 30;
-		int reproduceT = 3;
+		int reproduceT = 4;
 		int eatT = 10;
-		int tuna = 0;
+		int tuna = 100;
 
 		int time = 1000;
 
-		Environnement env = new Environnement(tailleEnvX, tailleEnvY);
+		Environnement env = new Environnement(tailleEnvX, tailleEnvY, true);
 
 		Vue vue = new Vue(env, 350, 350);
+		vue.setVisible(true);
 
 		Systeme systeme = new Systeme(env, vue);
 		systeme.setWaitingTime(500L);
-		systeme.setSpeed(200L);
+		systeme.setSpeed(0L);
 		env.setSysteme(systeme);
 
 		for (int i = 0; i < shark; i++) {
@@ -37,7 +38,7 @@ public class Wator {
 			int y = (int) (Math.random() * tailleEnvY);
 			Agent s = new Shark(x, y, env, dieS, reproduceS, eatS);
 			// System.out.println(x + " shark " + y);
-			systeme.addAgent(s);
+			systeme.addAgentToAgentList(s);
 
 		}
 
@@ -46,11 +47,10 @@ public class Wator {
 			int y = (int) (Math.random() * tailleEnvY);
 			Agent s = new Tuna(x, y, env, dieT, reproduceT, eatT);
 			// System.out.println(x + " tuna" + y);
-			systeme.addAgent(s);
+			systeme.addAgentToAgentList(s);
 
 		}
 
-		vue.setVisible(true);
 		systeme.run(time);
 		// systeme.runOnce();
 		// systeme.runOnce();

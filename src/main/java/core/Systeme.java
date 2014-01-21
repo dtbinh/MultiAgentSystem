@@ -2,14 +2,13 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import wator.Shark;
 import wator.Tuna;
 
 public class Systeme {
+
 	protected List<Agent> agents;
 	protected List<Agent> toDelete;
 	protected List<Agent> toAdd;
@@ -26,45 +25,32 @@ public class Systeme {
 		this.vue = vue;
 	}
 
-	public void setWaitingTime(Long ms) {
-		waitingTime = ms;
-	}
-
-	public void setSpeed(Long pourcentage) {
-		speed = pourcentage;
-	}
-
-	public void removeAgent(Agent a) {
-		int x = a.posX;
-		int y = a.posY;
-		Agent vide = new Vide(x, y, environnement);
-		agents.remove(a);
-		addAgent(vide);
-	}
-
-	public void addAgent(Agent a) {
-		if (!agents.contains(a)) {
-			if (!(a instanceof Vide)) {
-				agents.add(a);
-			}
-			environnement.grille[a.posX][a.posY] = a;
+	public void run(int n) {
+		for (int i = 0; i < n; i++) {
+			runOnce();
 		}
 	}
 
 	public void runOnce() {
-		// printCount();
-		Collections.shuffle(agents);
-		for (Agent a : agents) {
-			a.action();
-		}
-		updateAgentList();
+
 		vue.update();
+
+		// printCount();
+
+		Collections.shuffle(agents);
+		for (Agent agent : agents) {
+			agent.action();
+		}
+		updateAgentLists();
+
 		printCount();
+
 		try {
 			Thread.sleep(waitingTime * speed / 100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	private void printCount() {
@@ -80,31 +66,51 @@ public class Systeme {
 		System.out.println(nbS + " :" + nbT + " " + agents.size());
 	}
 
-	private void updateAgentList() {
-		for (Agent a : toDelete) {
-			removeAgent(a);
+	private void updateAgentLists() {
+
+		for (Agent agent : toDelete) {
+			removeAgent(agent);
 		}
 		toDelete.clear();
+
 		for (Agent a : toAdd) {
 			agents.add(a);
 		}
 		toAdd.clear();
-		// System.out.println("agents :" + agents);
+
 	}
 
-	public void run(int n) {
-		for (int i = 0; i < n; i++) {
-			runOnce();
-		}
+	public void removeAgent(Agent agent) {
+		int x = agent.posX;
+		int y = agent.posY;
+		agents.remove(agent);
+		setCellWithAgent(x, y, new Vide(x, y, environnement));
 	}
 
-	public void toDelete(Agent a) {
-		toDelete.add(a);
+	public void addAgentToAgentList(Agent agent) {
+		agents.add(agent);
+		setCellWithAgent(agent.posX, agent.posY, agent);
 	}
 
-	public void toAdd(Agent a) {
-		toAdd.add(a);
-		environnement.grille[a.posX][a.posY] = a;
+	public void addToDeleteList(Agent agent) {
+		toDelete.add(agent);
+	}
+
+	public void addToAddList(Agent agent) {
+		toAdd.add(agent);
+		setCellWithAgent(agent.posX, agent.posY, agent);
+	}
+
+	public void setCellWithAgent(int x, int y, Agent agent) {
+		environnement.grille[x][y] = agent;
+	}
+
+	public void setWaitingTime(Long ms) {
+		waitingTime = ms;
+	}
+
+	public void setSpeed(Long pourcentage) {
+		speed = pourcentage;
 	}
 
 }
