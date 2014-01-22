@@ -92,4 +92,8 @@ public class Environnement {
 		this.systeme = systeme;
 	}
 
+	public Agent getAgent(int x, int y) {
+		return grille[x][y];
+	}
+
 }

@@ -17,15 +17,10 @@ public class Shark extends Agent {
 
 	@Override
 	public void action() {
-
 		if (isStarved()) {
 			die();
 			return;
 		}
-
-		leftTimeToReproduce--;
-		leftTimeToEat--;
-		age++;
 
 		List<Agent> voisins = environnement.getVoisins(posX, posY);
 		Collections.shuffle(voisins);
@@ -56,6 +51,10 @@ public class Shark extends Agent {
 			}
 		}
 
+		leftTimeToReproduce--;
+		leftTimeToEat--;
+		age++;
+
 	}
 
 	private void die() {
@@ -71,7 +70,7 @@ public class Shark extends Agent {
 	}
 
 	private boolean isStarved() {
-		return --leftTimeToEat == 0;
+		return leftTimeToEat == 0;
 	}
 
 	@Override

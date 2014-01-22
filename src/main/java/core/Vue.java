@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Vue extends JFrame {
@@ -31,7 +32,7 @@ public class Vue extends JFrame {
 		grid.removeAll();
 		for (int x = 0; x < environnement.tailleX; x++) {
 			for (int y = 0; y < environnement.tailleY; y++) {
-				grid.add(environnement.grille[x][y].dessineMoi());
+				grid.add(environnement.getAgent(x, y).dessineMoi());
 			}
 		}
 		grid.validate();

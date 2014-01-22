@@ -33,10 +33,9 @@ public class Systeme {
 
 	public void runOnce() {
 
-		vue.update();
-
 		// printCount();
 
+		vue.update();
 		Collections.shuffle(agents);
 		for (Agent agent : agents) {
 			agent.action();

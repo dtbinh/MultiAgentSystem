@@ -22,8 +22,6 @@ public class Tuna extends Agent {
 			return;
 		}
 
-		--leftTimeToReproduce;
-
 		List<Agent> voisins = environnement.getVoisins(posX, posY);
 		Collections.shuffle(voisins);
 
@@ -38,6 +36,8 @@ public class Tuna extends Agent {
 		if (canMove(agentToMove)) {
 			reproduceAndMoveOrOnlyMove(agentToMove);
 		}
+
+		--leftTimeToReproduce;
 
 	}
 
