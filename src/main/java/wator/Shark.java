@@ -5,95 +5,107 @@ import java.util.Collections;
 import java.util.List;
 
 import core.Agent;
+import core.Coordonnees;
 import core.Environnement;
-import core.Vide;
 
 public class Shark extends Agent {
 
-	public Shark(int posX, int posY, Environnement environnement, int die,
-			int reproduce, int eat) {
-		super(posX, posY, environnement, die, reproduce, eat, Color.BLACK);
+	protected int TIME_TO_EAT;
+	protected int TIME_TO_REPRODUCE;
+
+	protected int leftTimeToEat;
+	protected int leftTimeToReproduce;
+
+	public Shark(Coordonnees coordonnees, Environnement environnement) {
+		super(coordonnees, environnement, Color.BLACK);
+		setTimeToEat(5);
+		setTimeToReproduce(7);
+	}
+
+	public void setTimeToReproduce(int time) {
+		TIME_TO_REPRODUCE = time;
+		leftTimeToReproduce = TIME_TO_REPRODUCE;
+	}
+
+	public void setTimeToEat(int time) {
+		TIME_TO_EAT = time;
+		leftTimeToEat = TIME_TO_EAT;
 	}
 
 	@Override
 	public void action() {
-		if (isStarved()) {
+		if (isDead) {
 			die();
+			Statistique.getInstance().addShark(-1);
 			return;
 		}
 
-		List<Agent> voisins = environnement.getVoisins(posX, posY);
+		evolution();
+		//
+		List<Coordonnees> voisins = environnement.getVoisins(coordonnees);
 		Collections.shuffle(voisins);
-		Agent toEat = null;
-		Agent toMove = null;
-		for (Agent voisin : voisins) {
-			if (voisin instanceof Tuna) {
-				toEat = voisin;
+		Agent agentToEat = null;
+		Coordonnees coordToMove = null;
+		Agent agentToTest = null;
+		// find the way to go. if i find a fish out.
+		// i keep it to eat it and i break the loop.
+		// else if i find a cell to go out i keep it too. else i don't move
+		for (Coordonnees voisin : voisins) {
+			agentToTest = systeme.getAgentByCoord(voisin);
+			if (canEat(agentToTest)) {
+				agentToEat = agentToTest;
 				break;
 			}
-			if (voisin instanceof Vide) {
-				toMove = voisin;
+			if (canMove(voisin)) {
+				coordToMove = voisin;
 			}
 		}
 
-		if (canMove(toEat)) {
-			if (canReproduce()) {
-				reproduce(toEat);
-			}
-			eat(toEat);
-			move(toEat);
+		if (agentToEat != null) {
+			eat(agentToEat);
 		} else {
-			if (canMove(toMove)) {
+			if (coordToMove != null) {
 				if (canReproduce()) {
-					reproduce(toMove);
+					reproduce(coordToMove);
 				}
-				move(toMove);
+				moveTo(coordToMove);
 			}
 		}
-
-		leftTimeToReproduce--;
-		leftTimeToEat--;
-		age++;
+		if (isStarved()) {
+			setDead(true);
+		}
 
 	}
 
-	private void die() {
-		systeme.addToDeleteList(this);
+	private boolean isStarved() {
+		return leftTimeToEat <= 0;
+	}
+
+	private boolean canEat(Agent agent) {
+		return agent instanceof Tuna;
+	}
+
+	protected void eat(Agent agent) {
+		agent.setDead(true);
+		moveTo(agent.getCoordonnees());
+		leftTimeToEat = TIME_TO_EAT;
+	}
+
+	private void evolution() {
+		age++;
+		leftTimeToEat--;
+		leftTimeToReproduce--;
+	}
+
+	protected void reproduce(Coordonnees thisToCoord) {
+		Statistique.getInstance().addShark(1);
+		Agent babyShark = new Shark(coordonnees, environnement);
+		leftTimeToReproduce = TIME_TO_REPRODUCE;
+		super.reproduce(babyShark, thisToCoord);
 	}
 
 	private boolean canReproduce() {
 		return leftTimeToReproduce <= 0;
 	}
 
-	private boolean canMove(Agent toMove) {
-		return toMove != null;
-	}
-
-	private boolean isStarved() {
-		return leftTimeToEat == 0;
-	}
-
-	@Override
-	protected void reproduce(Agent toMove) {
-		Agent shark = new Shark(posX, posY, environnement, TIME_TO_DIE,
-				TIME_TO_REPRODUCE, TIME_TO_EAT);
-		systeme.addToAddList(shark);
-
-		leftTimeToReproduce = TIME_TO_REPRODUCE;
-	}
-
-	private void move(Agent toMove) {
-		environnement.move(this, toMove);
-	}
-
-	public void eat(Agent agent) {
-
-		leftTimeToEat = TIME_TO_EAT;
-
-		agent.setDead(true);
-
-		systeme.addToDeleteList(agent);
-		systeme.setCellWithAgent(posX, posY,
-				new Vide(posX, posY, environnement));
-	}
 }

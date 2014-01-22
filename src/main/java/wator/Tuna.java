@@ -5,51 +5,43 @@ import java.util.Collections;
 import java.util.List;
 
 import core.Agent;
+import core.Coordonnees;
 import core.Environnement;
-import core.Vide;
 
 public class Tuna extends Agent {
 
-	public Tuna(int posX, int posY, Environnement environnement, int die,
-			int reproduce, int eat) {
-		super(posX, posY, environnement, die, reproduce, eat, Color.blue);
+	protected int TIME_TO_REPRODUCE;
+	protected int leftTimeToReproduce;
+
+	public Tuna(Coordonnees coordonnees, Environnement environnement) {
+		super(coordonnees, environnement, Color.blue);
+		setTimeToReproduce(4);
+	}
+
+	public void setTimeToReproduce(int time) {
+		TIME_TO_REPRODUCE = time;
+		leftTimeToReproduce = TIME_TO_REPRODUCE;
 	}
 
 	@Override
 	public void action() {
-
 		if (isDead) {
+			die();
+			Statistique.getInstance().addTuna(-1);
 			return;
 		}
+		evolution();
 
-		List<Agent> voisins = environnement.getVoisins(posX, posY);
+		List<Coordonnees> voisins = environnement.getVoisins(coordonnees);
 		Collections.shuffle(voisins);
-
-		Agent agentToMove = null;
-		for (Agent voisin : voisins) {
-			if (voisinEstCaseVide(voisin)) {
-				agentToMove = voisin;
-				break;
+		for (Coordonnees voisin : voisins) {
+			if (canMove(voisin)) {
+				if (canReproduce()) {
+					reproduce(voisin);
+				} else {
+					moveTo(voisin);
+				}
 			}
-		}
-
-		if (canMove(agentToMove)) {
-			reproduceAndMoveOrOnlyMove(agentToMove);
-		}
-
-		--leftTimeToReproduce;
-
-	}
-
-	private boolean voisinEstCaseVide(Agent voisin) {
-		return voisin instanceof Vide;
-	}
-
-	private void reproduceAndMoveOrOnlyMove(Agent toMove) {
-		if (canReproduce()) {
-			reproduce(toMove);
-		} else {
-			environnement.move(this, toMove);
 		}
 	}
 
@@ -57,16 +49,15 @@ public class Tuna extends Agent {
 		return leftTimeToReproduce <= 0;
 	}
 
-	private boolean canMove(Agent toMove) {
-		return toMove != null;
+	private void evolution() {
+		age++;
+		leftTimeToReproduce--;
 	}
 
-	@Override
-	protected void reproduce(Agent toMove) {
-		Agent tuna = new Tuna(posX, posY, environnement, TIME_TO_DIE,
-				TIME_TO_REPRODUCE, TIME_TO_EAT);
-		environnement.move(this, toMove);
-		systeme.addToAddList(tuna);
+	protected void reproduce(Coordonnees thisToCoord) {
+		Statistique.getInstance().addTuna(1);
+		Agent babyTuna = new Tuna(coordonnees, environnement);
+		leftTimeToReproduce = TIME_TO_REPRODUCE;
+		super.reproduce(babyTuna, thisToCoord);
 	}
-
 }

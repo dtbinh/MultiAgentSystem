@@ -3,11 +3,12 @@ package core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
-import wator.Shark;
+import wator.Statistique;
 import wator.Tuna;
 
-public class Systeme {
+public class Systeme extends Observable {
 
 	protected List<Agent> agents;
 	protected List<Agent> toDelete;
@@ -23,6 +24,7 @@ public class Systeme {
 		toAdd = new ArrayList<Agent>();
 		environnement = env;
 		this.vue = vue;
+		addObserver(vue);
 	}
 
 	public void run(int n) {
@@ -33,16 +35,14 @@ public class Systeme {
 
 	public void runOnce() {
 
-		// printCount();
-
-		vue.update();
 		Collections.shuffle(agents);
 		for (Agent agent : agents) {
 			agent.action();
 		}
-		updateAgentLists();
 
-		printCount();
+		updateAgentLists();
+		setChanged();
+		notifyObservers(this);
 
 		try {
 			Thread.sleep(waitingTime * speed / 100);
@@ -52,23 +52,10 @@ public class Systeme {
 
 	}
 
-	private void printCount() {
-		int nbS = 0, nbT = 0;
-		for (Agent a : agents) {
-			if (a instanceof Shark) {
-				nbS++;
-			}
-			if (a instanceof Tuna) {
-				nbT++;
-			}
-		}
-		System.out.println(nbS + " :" + nbT + " " + agents.size());
-	}
-
 	private void updateAgentLists() {
 
 		for (Agent agent : toDelete) {
-			removeAgent(agent);
+			agents.remove(agent);
 		}
 		toDelete.clear();
 
@@ -80,28 +67,18 @@ public class Systeme {
 	}
 
 	public void removeAgent(Agent agent) {
-		int x = agent.posX;
-		int y = agent.posY;
-		agents.remove(agent);
-		setCellWithAgent(x, y, new Vide(x, y, environnement));
+		toDelete.add(agent);
+		environnement.setPositionAgent(agent.coordonnees, false);
+	}
+
+	public void addAgent(Agent agent) {
+		toAdd.add(agent);
+		environnement.setPositionAgent(agent.coordonnees, true);
 	}
 
 	public void addAgentToAgentList(Agent agent) {
 		agents.add(agent);
-		setCellWithAgent(agent.posX, agent.posY, agent);
-	}
-
-	public void addToDeleteList(Agent agent) {
-		toDelete.add(agent);
-	}
-
-	public void addToAddList(Agent agent) {
-		toAdd.add(agent);
-		setCellWithAgent(agent.posX, agent.posY, agent);
-	}
-
-	public void setCellWithAgent(int x, int y, Agent agent) {
-		environnement.grille[x][y] = agent;
+		environnement.setPositionAgent(agent.coordonnees, true);
 	}
 
 	public void setWaitingTime(Long ms) {
@@ -110,6 +87,23 @@ public class Systeme {
 
 	public void setSpeed(Long pourcentage) {
 		speed = pourcentage;
+	}
+
+	public Agent getAgentByCoord(int tx, int ty) {
+		for (Agent agent : agents) {
+			if (agent.getPosX() == tx && agent.getPosY() == ty) {
+				return agent;
+			}
+		}
+		return null;
+	}
+
+	public Agent getAgentByCoord(Coordonnees coord) {
+		return getAgentByCoord(coord.getPosX(), coord.getPosY());
+	}
+
+	public int getAgentsCount() {
+		return agents.size();
 	}
 
 }

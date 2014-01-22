@@ -10,67 +10,70 @@ import javax.swing.border.BevelBorder;
 public abstract class Agent {
 	protected Environnement environnement;
 	protected JLabel print;
-	protected int posX, posY;
+	protected Coordonnees coordonnees;
 	protected Systeme systeme;
-
-	protected final int TIME_TO_EAT;
-	protected final int TIME_TO_REPRODUCE;
-	protected final int TIME_TO_DIE;
 
 	protected boolean isDead;
 	protected int age = 0;
-	protected int leftTimeToEat;
-	protected int leftTimeToReproduce;
-	protected int leftTimeToDie;
-	protected String image = "";
 	protected Color color;
 
-	public Agent(int posX, int posY, Environnement environnement, int die,
-			int reproduce, int eat, Color color) {
-		this.posX = posX;
-		this.posY = posY;
-		TIME_TO_DIE = die;
-		TIME_TO_EAT = eat;
+	public Agent(Coordonnees coordonnees, Environnement environnement,
+			Color color) {
+		this.coordonnees = coordonnees;
 		this.color = color;
-		TIME_TO_REPRODUCE = reproduce;
-		systeme = environnement.systeme;
+		systeme = environnement.getSysteme();
 		this.environnement = environnement;
-		leftTimeToDie = TIME_TO_DIE;
-		leftTimeToReproduce = TIME_TO_REPRODUCE;
-		leftTimeToEat = TIME_TO_EAT;
 		isDead = false;
-		setPrint(image);
+		setPrint();
 	}
 
-	protected void setPrint(String image) {
+	protected void setPrint() {
 		print = new JLabel();
 		print.setBackground(color);
 		print.setOpaque(true);
 		print.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 	}
 
-	public int getPosX() {
-		return posX;
+	public Coordonnees getCoordonnees() {
+		return coordonnees;
 	}
 
-	public int getPosY() {
-		return posY;
+	public void setCoordonnees(Coordonnees coordonnees) {
+		this.coordonnees = coordonnees;
 	}
 
 	public abstract void action();
-
-	public Component dessineMoi() {
-		return print;
-	}
-
-	public boolean isVide() {
-		return false;
-	}
-
-	protected abstract void reproduce(Agent a);
 
 	public void setDead(boolean b) {
 		isDead = b;
 	}
 
+	public int getPosX() {
+		return coordonnees.getPosX();
+	}
+
+	public int getPosY() {
+		return coordonnees.getPosY();
+	}
+
+	public Component print() {
+		return print;
+	}
+
+	protected void moveTo(Coordonnees toMove) {
+		environnement.move(this, toMove);
+	}
+
+	protected void die() {
+		systeme.removeAgent(this);
+	}
+
+	protected void reproduce(Agent newAgent, Coordonnees thisToCoord) {
+		moveTo(thisToCoord);
+		systeme.addAgent(newAgent);
+	}
+
+	protected boolean canMove(Coordonnees voisin) {
+		return !environnement.hasAgent(voisin);
+	}
 }
