@@ -6,7 +6,7 @@ import java.util.List;
 public class Environnement {
 
 	protected Systeme systeme;
-	protected Agent[][] grille;
+	protected boolean[][] grille;
 	protected int tailleX;
 	protected int tailleY;
 	protected boolean isTore;
@@ -16,7 +16,7 @@ public class Environnement {
 		this.tailleY = tailleY;
 		this.isTore = isTore;
 
-		grille = new Agent[tailleX][tailleY];
+		grille = new boolean[tailleX][tailleY];
 
 		remplirGrilleAvecCasesVides();
 	}
@@ -24,7 +24,7 @@ public class Environnement {
 	private void remplirGrilleAvecCasesVides() {
 		for (int x = 0; x < tailleX; x++) {
 			for (int y = 0; y < tailleY; y++) {
-				grille[x][y] = new Vide(x, y, this);
+				grille[x][y] = false;
 			}
 		}
 	}
