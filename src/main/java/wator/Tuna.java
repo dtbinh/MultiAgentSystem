@@ -41,6 +41,7 @@ public class Tuna extends Agent {
 				} else {
 					moveTo(voisin);
 				}
+				return;
 			}
 		}
 	}

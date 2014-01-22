@@ -65,15 +65,15 @@ public class Ocean implements Environnement {
 		if (isTore) {
 			res.add(new Coordonnees(((posX - 1) + tailleX) % tailleX,
 					((posY - 1) + tailleY) % tailleY));
-			res.add((new Coordonnees(((posX - 1) + tailleX) % tailleX, posY)));
+			res.add(new Coordonnees(((posX - 1) + tailleX) % tailleX, posY));
 			res.add(new Coordonnees(((posX - 1) + tailleX) % tailleX,
 					(posY + 1) % tailleY));
-			res.add((new Coordonnees(posX, (posY + 1) % tailleY)));
-			res.add((new Coordonnees((posX + 1) % tailleX, (posY + 1) % tailleY)));
-			res.add((new Coordonnees((posX + 1) % tailleX, posY)));
-			res.add((new Coordonnees((posX + 1) % tailleX,
-					((posY - 1) + tailleY) % tailleY)));
-			res.add((new Coordonnees(posX, ((posY - 1) + tailleY) % tailleY)));
+			res.add(new Coordonnees(posX, (posY + 1) % tailleY));
+			res.add(new Coordonnees((posX + 1) % tailleX, (posY + 1) % tailleY));
+			res.add(new Coordonnees((posX + 1) % tailleX, posY));
+			res.add(new Coordonnees((posX + 1) % tailleX,
+					((posY - 1) + tailleY) % tailleY));
+			res.add(new Coordonnees(posX, ((posY - 1) + tailleY) % tailleY));
 
 			return res;
 		}// else {

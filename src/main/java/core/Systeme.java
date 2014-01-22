@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
-import wator.Statistique;
-import wator.Tuna;
-
 public class Systeme extends Observable {
 
 	protected List<Agent> agents;
@@ -34,6 +31,8 @@ public class Systeme extends Observable {
 	}
 
 	public void runOnce() {
+		setChanged();
+		notifyObservers(this);
 
 		Collections.shuffle(agents);
 		for (Agent agent : agents) {
@@ -41,8 +40,6 @@ public class Systeme extends Observable {
 		}
 
 		updateAgentLists();
-		setChanged();
-		notifyObservers(this);
 
 		try {
 			Thread.sleep(waitingTime * speed / 100);

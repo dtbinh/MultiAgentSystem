@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -28,6 +29,7 @@ public class Vue extends JFrame implements Observer {
 	private int sizeY;
 	private JLabel agentNull;
 	private BufferedWriter br;
+	private JPanel paramPanel;
 
 	// TODO mettre le jscrollpane
 	public Vue(Environnement environnement, int sizeX, int sizeY) {
@@ -46,7 +48,6 @@ public class Vue extends JFrame implements Observer {
 	private void initFrame() {
 		setPreferredSize(new Dimension(sizeX, sizeY));
 
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -60,7 +61,10 @@ public class Vue extends JFrame implements Observer {
 		});
 		grid = new JPanel(new GridLayout(environnement.getTailleX(),
 				environnement.getTailleY()));
-		getContentPane().add(grid);
+		paramPanel = new Parametre();
+		setLayout(new BorderLayout());
+		getContentPane().add(grid, BorderLayout.CENTER);
+		getContentPane().add(paramPanel, BorderLayout.EAST);
 		pack();
 	}
 
