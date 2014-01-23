@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
+import java.util.Scanner;
+
+import wator.Shark;
+import wator.Tuna;
 
 public class Systeme extends Observable {
 
@@ -25,28 +29,56 @@ public class Systeme extends Observable {
 	}
 
 	public void run(int n) {
+		setChanged();
+		notifyObservers(this);
 		for (int i = 0; i < n; i++) {
 			runOnce();
 		}
 	}
 
 	public void runOnce() {
-		setChanged();
-		notifyObservers(this);
-
-		Collections.shuffle(agents);
-		for (Agent agent : agents) {
-			agent.action();
-		}
-
-		updateAgentLists();
 
 		try {
 			Thread.sleep(waitingTime * speed / 100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		System.out
+				.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+		count();
+		System.out.println("DEBUT DU TOUR DE PAROLE");
+		Collections.shuffle(agents);
+		for (Agent agent : agents) {
+			System.out.println("Je suis : " + agent);
+			agent.action();
+			count();
+		}
+		System.out.println("FIN DU TOUR DE PAROLE");
+		System.out.println("=============================================");
+		count();
+		System.out
+				.println("--------------------------------------------------");
+		updateAgentLists();
+		setChanged();
+		notifyObservers(this);
+	}
 
+	private void count() {
+		int s = 0, t = 0, o = 0;
+		for (Agent a : agents) {
+			if (a instanceof Tuna) {
+				t++;
+			} else {
+				if (a instanceof Shark) {
+					s++;
+				} else {
+					o++;
+				}
+			}
+		}
+		System.out.println("Agent " + agents);
+		System.out.println("Add " + toAdd);
+		System.out.println("Delete " + toDelete);
 	}
 
 	private void updateAgentLists() {

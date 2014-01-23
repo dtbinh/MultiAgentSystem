@@ -47,7 +47,7 @@ public class Vue extends JFrame implements Observer {
 
 	private void initFrame() {
 		setPreferredSize(new Dimension(sizeX, sizeY));
-
+		setLocationRelativeTo(null);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -68,9 +68,9 @@ public class Vue extends JFrame implements Observer {
 		pack();
 	}
 
-	private void setAgentNull() {
-		agentNull = new JLabel();
-		agentNull.setBackground(Color.white);
+	private void setAgentNull(Color color, String t) {
+		agentNull = new JLabel(t);
+		agentNull.setBackground(color);
 		agentNull.setOpaque(true);
 		agentNull.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
@@ -88,8 +88,10 @@ public class Vue extends JFrame implements Observer {
 			for (int y = 0; y < ty; y++) {
 				if (grille[x][y]) {
 					grid.add(systeme.getAgentByCoord(x, y).print());
+					// setAgentNull(Color.BLUE, x + " " + y);
+					// grid.add(agentNull);
 				} else {
-					setAgentNull();
+					setAgentNull(Color.WHITE, x + " " + y);
 					grid.add(agentNull);
 				}
 			}

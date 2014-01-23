@@ -76,4 +76,10 @@ public abstract class Agent {
 	protected boolean canMove(Coordonnees voisin) {
 		return !environnement.hasAgent(voisin);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " (" + coordonnees.posX + " "
+				+ coordonnees.posY + ")";
+	}
 }

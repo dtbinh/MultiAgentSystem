@@ -51,13 +51,14 @@ public class Shark extends Agent {
 		// i keep it to eat it and i break the loop.
 		// else if i find a cell to go out i keep it too. else i don't move
 		for (Coordonnees voisin : voisins) {
-			agentToTest = systeme.getAgentByCoord(voisin);
-			if (canEat(agentToTest)) {
-				agentToEat = agentToTest;
-				break;
-			}
 			if (canMove(voisin)) {
 				coordToMove = voisin;
+			} else {
+				agentToTest = systeme.getAgentByCoord(voisin);
+				if (canEat(agentToTest)) {
+					agentToEat = agentToTest;
+					break;
+				}
 			}
 		}
 
@@ -86,6 +87,7 @@ public class Shark extends Agent {
 	}
 
 	protected void eat(Agent agent) {
+		System.out.println("je vais etre mangé " + agent);
 		agent.setDead(true);
 		moveTo(agent.getCoordonnees());
 		leftTimeToEat = TIME_TO_EAT;
