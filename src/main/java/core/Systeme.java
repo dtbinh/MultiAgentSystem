@@ -53,7 +53,6 @@ public class Systeme extends Observable {
 				case0.getAgent().action();
 			}
 		}
-
 	}
 
 	private void slowExecution() {

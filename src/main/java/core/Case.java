@@ -5,18 +5,7 @@ import lombok.Data;
 @Data
 public class Case {
 
-	private Coordonnees coordonnees;
-
 	private Agent agent;
-
-	/**
-	 * Constructor
-	 * 
-	 * @param coordonnees
-	 */
-	public Case(final Coordonnees coordonnees) {
-		this.coordonnees = coordonnees;
-	}
 
 	/**
 	 * True if the case doesn't contain an agent.
