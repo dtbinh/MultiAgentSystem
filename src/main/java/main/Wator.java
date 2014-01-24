@@ -14,18 +14,18 @@ public class Wator {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		int tailleEnv = 50;
+		int tailleEnv = 25;
 		int eatShark = 3;
 		int reproductionShark = 4;
 		int reproductionTuna = 3;
 
-		int shark = 50;
+		int shark = 15;
 		int tuna = 100;
 
 		long pourcentageAffichage = 100;
 		long tempsAttenteAffichage = 50;
 
-		int time = 1000;
+		int time = 1;
 		Environnement ocean = new Ocean(tailleEnv);
 		Vue vue = new Vue(ocean, 400, 400);
 		vue.setVisible(true);

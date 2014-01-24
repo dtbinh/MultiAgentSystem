@@ -100,6 +100,8 @@ public class Vue extends JFrame implements Observer {
 		grid.repaint();
 		try {
 			br.write(Statistique.getInstance().stats());
+			br.flush();
+			System.out.println(Statistique.getInstance().stats());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -11,7 +11,7 @@ public class Statistique {
 		nbShark = 0;
 		nbTuna = 0;
 		total = 0;
-		ligne = "0;0;0;0";
+		ligne = "";
 	}
 
 	private static Statistique INSTANCE = new Statistique();

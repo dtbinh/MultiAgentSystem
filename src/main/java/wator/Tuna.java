@@ -26,9 +26,9 @@ public class Tuna extends Agent {
 	@Override
 	public void action() {
 		if (isDead) {
-			Statistique.getInstance().addTuna(-1);
 			return;
 		}
+
 		evolution();
 
 		List<Coordonnees> voisins = environnement.getVoisins(coordonnees);
@@ -37,8 +37,8 @@ public class Tuna extends Agent {
 			if (canMove(voisin)) {
 				if (canReproduce()) {
 					reproduce();
-					moveTo(voisin);
 				}
+				moveTo(voisin);
 				return;
 			}
 		}
@@ -54,7 +54,6 @@ public class Tuna extends Agent {
 	}
 
 	protected void reproduce() {
-		Statistique.getInstance().addTuna(1);
 		Agent babyTuna = new Tuna(coordonnees, environnement);
 		leftTimeToReproduce = TIME_TO_REPRODUCE;
 		super.reproduce(babyTuna);

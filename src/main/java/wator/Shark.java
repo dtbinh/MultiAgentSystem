@@ -35,8 +35,7 @@ public class Shark extends Agent {
 	@Override
 	public void action() {
 		if (isDead) {
-			die();
-			Statistique.getInstance().addShark(-1);
+			// die();
 			return;
 		}
 

@@ -17,6 +17,9 @@ public abstract class Agent {
 	protected int age = 0;
 	protected Color color;
 
+	private int monID;
+	private static int ID = 0;
+
 	public Agent(Coordonnees coordonnees, Environnement environnement,
 			Color color) {
 		this.coordonnees = coordonnees;
@@ -25,6 +28,7 @@ public abstract class Agent {
 		this.environnement = environnement;
 		isDead = false;
 		setPrint();
+		monID = ++ID;
 	}
 
 	protected void setPrint() {
@@ -65,14 +69,14 @@ public abstract class Agent {
 	}
 
 	protected void die() {
+		System.out.println(this + " je meurs");
 		setDead(true);
 		systeme.removeAgent(this);
 	}
 
 	protected void kill(Agent agent) {
-		agent.setDead(true);
-		systeme.removeAgent(agent);
-
+		System.out.println(this + " m' a tue " + agent);
+		agent.die();
 	}
 
 	protected void reproduce(Agent newAgent) {
@@ -81,6 +85,32 @@ public abstract class Agent {
 
 	protected boolean canMove(Coordonnees voisin) {
 		return !environnement.hasAgent(voisin);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + monID;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Agent other = (Agent) obj;
+		if (monID != other.monID) {
+			return false;
+		}
+		return true;
 	}
 
 }

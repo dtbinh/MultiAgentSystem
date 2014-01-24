@@ -14,7 +14,6 @@ import wator.Tuna;
 public class Systeme extends Observable {
 
 	protected List<Agent> agents;
-	// protected List<Agent> toDelete;
 	protected List<Agent> toAdd;
 	protected Environnement environnement;
 	protected Vue vue;
@@ -23,7 +22,6 @@ public class Systeme extends Observable {
 
 	public Systeme(Environnement env, Vue vue) {
 		agents = new ArrayList<Agent>();
-		// toDelete = new ArrayList<Agent>();
 		toAdd = new ArrayList<Agent>();
 		environnement = env;
 		this.vue = vue;
@@ -31,16 +29,12 @@ public class Systeme extends Observable {
 	}
 
 	public void run(int n) {
-		setChanged();
-		notifyObservers(this);
 		for (int i = 0; i < n; i++) {
 			runOnce();
 		}
 	}
 
 	public void run() {
-		setChanged();
-		notifyObservers(this);
 		while (true) {
 			runOnce();
 		}
@@ -54,10 +48,9 @@ public class Systeme extends Observable {
 			e.printStackTrace();
 		}
 
-		Object agentClone = ((ArrayList) agents).clone();
-		for (Object objet : (ArrayList) agentClone) {
-			Agent agent = (Agent) objet;
-			agent.action();
+		List<Agent> clone = new ArrayList<Agent>(agents);
+		for (Agent objet : clone) {
+			objet.action();
 		}
 		updateAgentLists();
 		setChanged();
@@ -89,6 +82,7 @@ public class Systeme extends Observable {
 	}
 
 	public void removeAgent(Agent agent) {
+		System.out.println(agent + "je suis retiré");
 		agents.remove(agent);
 		environnement.setPositionAgent(agent.coordonnees, false);
 	}
