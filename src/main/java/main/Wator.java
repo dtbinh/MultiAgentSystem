@@ -28,5 +28,6 @@ public class Wator {
 		systeme.setSpeed(pourcentageAffichage);
 		ocean.setSysteme(systeme);
 
+		systeme.run();
 	}
 }

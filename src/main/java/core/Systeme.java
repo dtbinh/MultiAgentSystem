@@ -37,8 +37,6 @@ public class Systeme extends Observable {
 	public void runOneTurn() {
 		slowExecution();
 
-		setChanged();
-		notifyObservers(this);
 	}
 
 	private void slowExecution() {
