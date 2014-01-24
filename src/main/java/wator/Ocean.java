@@ -109,8 +109,7 @@ public class Ocean implements Environnement {
 					coordonnees, this));
 		}
 
-		final int j = i;
-		for (; i < initialNumberOfTuna + j; i++) {
+		for (; i < initialNumberOfTuna + initialNumberOfShark; i++) {
 			final Coordonnees coordonnees = coordonneesDeLaGrille.get(i);
 			grille[coordonnees.getX()][coordonnees.getY()].setAgent(new Tuna(
 					coordonnees, this));
