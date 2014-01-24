@@ -42,8 +42,7 @@ public class Ocean implements Environnement {
 		this.isTore = isTore;
 		grille = new Case[tailleX][tailleY];
 
-		remplirGrilleAvecCasesVides();
-		initGrilleWithSharksAndTunas(initialNumberOfShark, initialNumberOfTuna);
+		initGrille(initialNumberOfShark, initialNumberOfTuna);
 	}
 
 	/**
@@ -65,6 +64,18 @@ public class Ocean implements Environnement {
 	public Ocean(final int taille, final int initialNumberOfShark,
 			final int initialNumberOfTuna) {
 		this(taille, taille, initialNumberOfShark, initialNumberOfTuna, true);
+	}
+
+	/**
+	 * Initialise complétement notre grille pour le premier tour de jeu.
+	 * 
+	 * @param initialNumberOfShark
+	 * @param initialNumberOfTuna
+	 */
+	private void initGrille(final int initialNumberOfShark,
+			final int initialNumberOfTuna) {
+		remplirGrilleAvecCasesVides();
+		initGrilleWithSharksAndTunas(initialNumberOfShark, initialNumberOfTuna);
 	}
 
 	/**
