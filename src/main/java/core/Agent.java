@@ -18,7 +18,7 @@ public abstract class Agent {
 	protected Color color;
 
 	/**
-	 * Constructor
+	 * Construtor
 	 * 
 	 * @param coordonnees
 	 * @param environnement

@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
 
 import lombok.Data;
@@ -36,6 +38,21 @@ public class Systeme extends Observable {
 	 */
 	public void runOneTurn() {
 		slowExecution();
+
+		final List<Coordonnees> coordonnéesDeLaGrille = environnement
+				.getCoordonneesDeLaGrille();
+
+		Collections.shuffle(coordonnéesDeLaGrille);
+
+		for (final Coordonnees coordonnees : coordonnéesDeLaGrille) {
+
+			final Case case0 = environnement.getGrille()[coordonnees.getX()][coordonnees
+					.getY()];
+
+			if (case0.isNotVide()) {
+				case0.getAgent().action();
+			}
+		}
 
 	}
 

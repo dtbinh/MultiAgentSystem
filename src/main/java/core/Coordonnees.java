@@ -7,8 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class Coordonnees {
 
-	protected int x;
+	private int x;
 
-	protected int y;
+	private int y;
 
 }

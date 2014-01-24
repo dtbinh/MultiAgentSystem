@@ -15,4 +15,7 @@ public interface Environnement {
 	void setSysteme(final Systeme systeme);
 
 	List<Coordonnees> getCoordonneesVoisines(final Coordonnees coordonnees);
+
+	List<Coordonnees> getCoordonneesDeLaGrille();
+
 }
