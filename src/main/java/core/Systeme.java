@@ -2,17 +2,19 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
-import java.util.Scanner;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import wator.Shark;
+import wator.Statistique;
 import wator.Tuna;
 
 public class Systeme extends Observable {
 
-	protected List<Agent> agents;
-	protected List<Agent> toDelete;
+	protected ConcurrentLinkedQueue<Agent> agents;
+	// protected List<Agent> toDelete;
 	protected List<Agent> toAdd;
 	protected Environnement environnement;
 	protected Vue vue;
@@ -20,8 +22,8 @@ public class Systeme extends Observable {
 	protected Long speed = 100L;
 
 	public Systeme(Environnement env, Vue vue) {
-		agents = new ArrayList<Agent>();
-		toDelete = new ArrayList<Agent>();
+		agents = new ConcurrentLinkedQueue<Agent>();
+		// toDelete = new ArrayList<Agent>();
 		toAdd = new ArrayList<Agent>();
 		environnement = env;
 		this.vue = vue;
@@ -36,28 +38,29 @@ public class Systeme extends Observable {
 		}
 	}
 
-	public void runOnce() {
+	public void run() {
+		setChanged();
+		notifyObservers(this);
+		while (true) {
+			runOnce();
+		}
+	}
 
+	public void runOnce() {
+		count();
 		try {
 			Thread.sleep(waitingTime * speed / 100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out
-				.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
-		count();
-		System.out.println("DEBUT DU TOUR DE PAROLE");
-		Collections.shuffle(agents);
-		for (Agent agent : agents) {
-			System.out.println("Je suis : " + agent);
+		Collections.shuffle(new ArrayList<>(agents));
+		Iterator<Agent> agentITE = agents.iterator();
+		Agent agent = null;
+
+		while (agentITE.hasNext()) {
+			agent = agentITE.next();
 			agent.action();
-			count();
 		}
-		System.out.println("FIN DU TOUR DE PAROLE");
-		System.out.println("=============================================");
-		count();
-		System.out
-				.println("--------------------------------------------------");
 		updateAgentLists();
 		setChanged();
 		notifyObservers(this);
@@ -76,17 +79,20 @@ public class Systeme extends Observable {
 				}
 			}
 		}
-		System.out.println("Agent " + agents);
-		System.out.println("Add " + toAdd);
-		System.out.println("Delete " + toDelete);
+		// System.out.println("Agent " + agents);
+		// System.out.println("Add " + toAdd);
+		// System.out.println("Delete " + toDelete);
+		Statistique.getInstance().setStats(
+				o + ";" + t + ";" + s + ";" + agents.size());
+		// System.out.println("=========================================");
 	}
 
 	private void updateAgentLists() {
-
-		for (Agent agent : toDelete) {
-			agents.remove(agent);
-		}
-		toDelete.clear();
+		//
+		// for (Agent agent : toDelete) {
+		// agents.remove(agent);
+		// }
+		// toDelete.clear();
 
 		for (Agent a : toAdd) {
 			agents.add(a);
@@ -96,16 +102,17 @@ public class Systeme extends Observable {
 	}
 
 	public void removeAgent(Agent agent) {
-		toDelete.add(agent);
+		// toDelete.add(agent);
+		agents.remove(agent);
 		environnement.setPositionAgent(agent.coordonnees, false);
 	}
 
-	public void addAgent(Agent agent) {
+	public void newAgent(Agent agent) {
 		toAdd.add(agent);
 		environnement.setPositionAgent(agent.coordonnees, true);
 	}
 
-	public void addAgentToAgentList(Agent agent) {
+	public void addAgent(Agent agent) {
 		agents.add(agent);
 		environnement.setPositionAgent(agent.coordonnees, true);
 	}

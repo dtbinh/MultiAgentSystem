@@ -65,21 +65,23 @@ public abstract class Agent {
 	}
 
 	protected void die() {
+		setDead(true);
 		systeme.removeAgent(this);
+	}
+
+	protected void kill(Agent agent) {
+		agent.setDead(true);
+		systeme.removeAgent(agent);
+
 	}
 
 	protected void reproduce(Agent newAgent, Coordonnees thisToCoord) {
 		moveTo(thisToCoord);
-		systeme.addAgent(newAgent);
+		systeme.newAgent(newAgent);
 	}
 
 	protected boolean canMove(Coordonnees voisin) {
 		return !environnement.hasAgent(voisin);
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + " (" + coordonnees.posX + " "
-				+ coordonnees.posY + ")";
-	}
 }

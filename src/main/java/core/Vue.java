@@ -53,10 +53,12 @@ public class Vue extends JFrame implements Observer {
 			public void windowClosing(WindowEvent e) {
 				try {
 					br.close();
+					System.exit(0);
 				} catch (IOException e1) {
 					e1.printStackTrace();
+					System.exit(0);
 				}
-				System.exit(0);
+
 			}
 		});
 		grid = new JPanel(new GridLayout(environnement.getTailleX(),
@@ -68,8 +70,8 @@ public class Vue extends JFrame implements Observer {
 		pack();
 	}
 
-	private void setAgentNull(Color color, String t) {
-		agentNull = new JLabel(t);
+	private void setAgentNull(Color color) {
+		agentNull = new JLabel();
 		agentNull.setBackground(color);
 		agentNull.setOpaque(true);
 		agentNull.setBorder(BorderFactory
@@ -79,8 +81,8 @@ public class Vue extends JFrame implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Systeme systeme = (Systeme) o;
-		System.out.println(systeme.getAgentsCount());
 		grid.removeAll();
+		Statistique.getInstance().setTotal(systeme.getAgentsCount());
 		boolean[][] grille = environnement.getGrille();
 		int tx = environnement.getTailleX();
 		int ty = environnement.getTailleY();
@@ -88,10 +90,8 @@ public class Vue extends JFrame implements Observer {
 			for (int y = 0; y < ty; y++) {
 				if (grille[x][y]) {
 					grid.add(systeme.getAgentByCoord(x, y).print());
-					// setAgentNull(Color.BLUE, x + " " + y);
-					// grid.add(agentNull);
 				} else {
-					setAgentNull(Color.WHITE, x + " " + y);
+					setAgentNull(Color.WHITE);
 					grid.add(agentNull);
 				}
 			}
@@ -99,7 +99,7 @@ public class Vue extends JFrame implements Observer {
 		grid.validate();
 		grid.repaint();
 		try {
-			br.write(Statistique.getInstance().toString());
+			br.write(Statistique.getInstance().stats());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -26,7 +26,6 @@ public class Tuna extends Agent {
 	@Override
 	public void action() {
 		if (isDead) {
-			die();
 			Statistique.getInstance().addTuna(-1);
 			return;
 		}

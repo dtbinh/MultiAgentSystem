@@ -14,19 +14,18 @@ public class Wator {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		int tailleEnv = 3;
-		System.out.println(tailleEnv * tailleEnv);
-		int eatShark = 5;
-		int reproductionShark = 7;
-		int reproductionTuna = 4;
+		int tailleEnv = 40;
+		int eatShark = 2;
+		int reproductionShark = 4;
+		int reproductionTuna = 2;
 
-		int shark = 1;
-		int tuna = 5;
+		int shark = 50;
+		int tuna = 200;
 
-		long pourcentageAffichage = 1000;
-		long tempsAttenteAffichage = 500;
+		long pourcentageAffichage = 100;
+		long tempsAttenteAffichage = 50;
 
-		int time = 2;
+		int time = 1000;
 		Environnement ocean = new Ocean(tailleEnv);
 		Vue vue = new Vue(ocean, 400, 400);
 		vue.setVisible(true);
@@ -51,7 +50,7 @@ public class Wator {
 			((Shark) s).setTimeToEat(eatShark);
 			((Shark) s).setTimeToReproduce(reproductionShark);
 			Statistique.getInstance().addShark(1);
-			systeme.addAgentToAgentList(s);
+			systeme.addAgent(s);
 		}
 
 		for (int i = 0; i < tuna; i++) {
@@ -65,8 +64,8 @@ public class Wator {
 			Agent s = new Tuna(coord, ocean);
 			((Tuna) s).setTimeToReproduce(reproductionTuna);
 			Statistique.getInstance().addTuna(1);
-			systeme.addAgentToAgentList(s);
+			systeme.addAgent(s);
 		}
-		systeme.run(time);
+		systeme.run();
 	}
 }

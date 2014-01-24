@@ -17,7 +17,7 @@ public class Shark extends Agent {
 	protected int leftTimeToReproduce;
 
 	public Shark(Coordonnees coordonnees, Environnement environnement) {
-		super(coordonnees, environnement, Color.BLACK);
+		super(coordonnees, environnement, Color.RED);
 		setTimeToEat(5);
 		setTimeToReproduce(7);
 	}
@@ -87,8 +87,7 @@ public class Shark extends Agent {
 	}
 
 	protected void eat(Agent agent) {
-		System.out.println("je vais etre mangé " + agent);
-		agent.setDead(true);
+		kill(agent);
 		moveTo(agent.getCoordonnees());
 		leftTimeToEat = TIME_TO_EAT;
 	}

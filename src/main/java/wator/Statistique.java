@@ -4,13 +4,17 @@ public class Statistique {
 
 	protected int nbShark;
 	protected int nbTuna;
+	protected int total;
+	protected String ligne;
 
 	private Statistique() {
 		nbShark = 0;
 		nbTuna = 0;
+		total = 0;
+		ligne = "0;0;0;0";
 	}
 
-	public static Statistique INSTANCE = new Statistique();
+	private static Statistique INSTANCE = new Statistique();
 
 	public static Statistique getInstance() {
 		return INSTANCE;
@@ -32,12 +36,24 @@ public class Statistique {
 		return nbTuna;
 	}
 
+	public void setTotal(int to) {
+		total = to;
+	}
+
 	@Override
 	public String toString() {
-		return nbShark + ";" + nbTuna + "\n";
+		return nbShark + ";" + nbTuna + ";" + total + "\n";
+	}
+
+	public void setStats(String stats) {
+		ligne = stats;
+	}
+
+	public String stats() {
+		return ligne + "\n";
 	}
 
 	public String getEntete() {
-		return "Requins;Thons\n";
+		return "Autres;Thons;Requins;Total\n";
 	}
 }
