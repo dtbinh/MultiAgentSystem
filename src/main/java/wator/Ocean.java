@@ -3,64 +3,79 @@ package wator;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.Agent;
+import lombok.Data;
+import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 import core.Systeme;
 
+@Data
 public class Ocean implements Environnement {
 
 	protected Systeme systeme;
-	protected boolean[][] grille;
+
+	protected Case[][] grille;
+
 	protected int tailleX;
+
 	protected int tailleY;
+
 	protected boolean isTore;
 
-	public Ocean(int tailleX, int tailleY, boolean isTore) {
+	/**
+	 * Constructor
+	 * 
+	 * @param tailleX
+	 * @param tailleY
+	 * @param isTore
+	 */
+	public Ocean(final int tailleX, final int tailleY, final boolean isTore) {
 		this.tailleX = tailleX;
 		this.tailleY = tailleY;
 		this.isTore = isTore;
-		grille = new boolean[tailleX][tailleY];
+		grille = new Case[tailleX][tailleY];
 
 		remplirGrilleAvecCasesVides();
 	}
 
-	public Ocean(int taille, boolean isTore) {
+	/**
+	 * Constructor
+	 * 
+	 * @param taille
+	 * @param isTore
+	 */
+	public Ocean(final int taille, final boolean isTore) {
 		this(taille, taille, isTore);
 	}
 
-	public Ocean(int taille) {
+	/**
+	 * Constructor
+	 * 
+	 * @param taille
+	 */
+	public Ocean(final int taille) {
 		this(taille, taille, true);
 	}
 
+	/**
+	 * Initialise la grille
+	 */
 	private void remplirGrilleAvecCasesVides() {
 		for (int x = 0; x < tailleX; x++) {
 			for (int y = 0; y < tailleY; y++) {
-				grille[x][y] = false;
+				grille[x][y] = new Case(new Coordonnees(tailleX, tailleY));
 			}
 		}
 	}
 
 	@Override
-	public int getTailleX() {
-		return tailleX;
-	}
+	public List<Coordonnees> getCoordonneesVoisines(final Coordonnees coordonnees) {
 
-	@Override
-	public int getTailleY() {
-		return tailleY;
-	}
+		// TODO RAL : todo WHAT ?
 
-	@Override
-	public List<Coordonnees> getVoisins(Coordonnees coordonnees) {
-		// TODO
-		List<Coordonnees> res = new ArrayList<Coordonnees>();
-		int posX = coordonnees.getPosX();
-		int posY = coordonnees.getPosY();
-		// boolean xp = (posX + 1) < tailleX;
-		// boolean xm = (posX - 1) >= 0;
-		// boolean ym = (posY - 1) >= 0;
-		// boolean yp = (posY + 1) < tailleY;
+		final List<Coordonnees> res = new ArrayList<Coordonnees>();
+		final int posX = coordonnees.getPosX();
+		final int posY = coordonnees.getPosY();
 
 		if (isTore) {
 			res.add(new Coordonnees(((posX - 1) + tailleX) % tailleX,
@@ -76,71 +91,11 @@ public class Ocean implements Environnement {
 			res.add(new Coordonnees(posX, ((posY - 1) + tailleY) % tailleY));
 
 			return res;
-		}// else {
-			// if (xm && ym) {
-			// res.add(grille[posX - 1][posY - 1]);
-			// }
-			// if (xm) {
-			// res.add(grille[posX - 1][posY]);
-			// }
-			// if (xm && yp) {
-			// res.add(grille[posX - 1][posY + 1]);
-			// }
-			// if (yp) {
-			// res.add(grille[posX][posY + 1]);
-			// }
-			// if (xp && yp) {
-			// res.add(grille[posX + 1][posY + 1]);
-			// }
-			// if (xp) {
-			// res.add(grille[posX + 1][posY]);
-			// }
-			// if (xp && ym) {
-			// res.add(grille[posX + 1][posY - 1]);
-			// }
-			// if (ym) {
-			// res.add(grille[posX][posY - 1]);
-			// }
+		}
+
+		// TODO RAL : Ajouter le code pour le cas d'une grille non torique.
+
 		return res;
-	}
-
-	@Override
-	public void setSysteme(Systeme systeme) {
-		this.systeme = systeme;
-	}
-
-	@Override
-	public void display() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean hasAgent(Coordonnees coordonnees) {
-		return grille[coordonnees.getPosX()][coordonnees.getPosY()];
-	}
-
-	@Override
-	public void move(Agent agent, Coordonnees to) {
-		setPositionAgent(agent.getCoordonnees(), false);
-		setPositionAgent(to, true);
-		agent.setCoordonnees(to);
-
-	}
-
-	@Override
-	public void setPositionAgent(Coordonnees aCoordonnees, boolean activated) {
-		grille[aCoordonnees.getPosX()][aCoordonnees.getPosY()] = activated;
-	}
-
-	@Override
-	public boolean[][] getGrille() {
-		return grille;
-	}
-
-	@Override
-	public Systeme getSysteme() {
-		return systeme;
 	}
 
 }

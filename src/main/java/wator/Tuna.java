@@ -1,8 +1,6 @@
 package wator;
 
 import java.awt.Color;
-import java.util.Collections;
-import java.util.List;
 
 import core.Agent;
 import core.Coordonnees;
@@ -13,14 +11,9 @@ public class Tuna extends Agent {
 	protected int TIME_TO_REPRODUCE;
 	protected int leftTimeToReproduce;
 
-	public Tuna(Coordonnees coordonnees, Environnement environnement) {
-		super(coordonnees, environnement, Color.blue);
+	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
+		super(coordonnees, environnement, Color.green);
 		setTimeToReproduce(4);
-	}
-
-	public void setTimeToReproduce(int time) {
-		TIME_TO_REPRODUCE = time;
-		leftTimeToReproduce = TIME_TO_REPRODUCE;
 	}
 
 	@Override
@@ -29,33 +22,36 @@ public class Tuna extends Agent {
 			return;
 		}
 
-		evolution();
+		vieillis();
 
-		List<Coordonnees> voisins = environnement.getVoisins(coordonnees);
-		Collections.shuffle(voisins);
-		for (Coordonnees voisin : voisins) {
-			if (canMove(voisin)) {
-				if (canReproduce()) {
-					reproduce();
-				}
-				moveTo(voisin);
-				return;
-			}
+		for (final Coordonnees voisin : environnement
+				.getCoordonneesVoisines(coordonnees)) {
+
 		}
 	}
 
-	private boolean canReproduce() {
-		return leftTimeToReproduce <= 0;
-	}
-
-	private void evolution() {
+	/**
+	 * Fait "vieillir" le thon d'un jour
+	 */
+	private void vieillis() {
 		age++;
 		leftTimeToReproduce--;
 	}
 
-	protected void reproduce() {
-		Agent babyTuna = new Tuna(coordonnees, environnement);
+	/**
+	 * @return
+	 */
+	private boolean canReproduce() {
+		return leftTimeToReproduce <= 0;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param time
+	 */
+	public void setTimeToReproduce(final int time) {
+		TIME_TO_REPRODUCE = time;
 		leftTimeToReproduce = TIME_TO_REPRODUCE;
-		super.reproduce(babyTuna);
 	}
 }

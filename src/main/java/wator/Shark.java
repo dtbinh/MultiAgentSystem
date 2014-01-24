@@ -1,114 +1,104 @@
 package wator;
 
 import java.awt.Color;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
 import core.Agent;
+import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
+@Data
 public class Shark extends Agent {
 
-	protected int TIME_TO_EAT;
-	protected int TIME_TO_REPRODUCE;
+	private boolean aDejaJoue = false;
 
-	protected int leftTimeToEat;
-	protected int leftTimeToReproduce;
+	private int TIME_TO_EAT;
+	private int TIME_TO_REPRODUCE;
 
-	public Shark(Coordonnees coordonnees, Environnement environnement) {
+	private int leftTimeToEat;
+	private int leftTimeToReproduce;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param coordonnees
+	 * @param environnement
+	 */
+	public Shark(final Coordonnees coordonnees,
+			final Environnement environnement) {
 		super(coordonnees, environnement, Color.RED);
 		setTimeToEat(5);
 		setTimeToReproduce(7);
 	}
 
-	public void setTimeToReproduce(int time) {
-		TIME_TO_REPRODUCE = time;
-		leftTimeToReproduce = TIME_TO_REPRODUCE;
-	}
-
-	public void setTimeToEat(int time) {
-		TIME_TO_EAT = time;
-		leftTimeToEat = TIME_TO_EAT;
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see core.Agent#action()
+	 */
 	@Override
 	public void action() {
-		if (isDead) {
-			// die();
-			return;
-		}
-
-		evolution();
-		//
-		List<Coordonnees> voisins = environnement.getVoisins(coordonnees);
-		Collections.shuffle(voisins);
-		Agent agentToEat = null;
-		Coordonnees coordToMove = null;
-		Agent agentToTest = null;
-		// find the way to go. if i find a fish out.
-		// i keep it to eat it and i break the loop.
-		// else if i find a cell to go out i keep it too. else i don't move
-		for (Coordonnees voisin : voisins) {
-			if (canMove(voisin)) {
-				coordToMove = voisin;
-			} else {
-				agentToTest = systeme.getAgentByCoord(voisin);
-				if (canEat(agentToTest)) {
-					agentToEat = agentToTest;
-					break;
-				}
-			}
-		}
 
 		if (isStarved()) {
-			setDead(true);
+			// TODO JIV : ajouter le méthode le faisant mourrir
 			return;
 		}
-		if (agentToEat != null) {
-			if (canReproduce()) {
-				reproduce();
-			}
-			eat(agentToEat);
-			moveTo(agentToEat.getCoordonnees());
-		} else {
-			if (coordToMove != null) {
-				if (canReproduce()) {
-					reproduce();
-				}
-				moveTo(coordToMove);
-			}
+
+		vieillis();
+
+		final List<Case> voisinsMangeables = new ArrayList<Case>();
+
+		for (final Coordonnees voisin : environnement
+				.getCoordonneesVoisines(coordonnees)) {
+
 		}
 
 	}
 
-	private boolean isStarved() {
-		return leftTimeToEat <= 0;
-	}
-
-	private boolean canEat(Agent agent) {
-		return agent instanceof Tuna;
-	}
-
-	protected void eat(Agent agent) {
-		kill(agent);
-		leftTimeToEat = TIME_TO_EAT;
-	}
-
-	private void evolution() {
+	/**
+	 * Fait "vieillir" d'un jour le requin
+	 */
+	private void vieillis() {
 		age++;
 		leftTimeToEat--;
 		leftTimeToReproduce--;
 	}
 
-	protected void reproduce() {
-		Agent babyShark = new Shark(coordonnees, environnement);
-		leftTimeToReproduce = TIME_TO_REPRODUCE;
-		super.reproduce(babyShark);
+	/**
+	 * @return
+	 */
+	private boolean isStarved() {
+		return leftTimeToEat == 0;
 	}
 
+	/**
+	 * @return
+	 */
 	private boolean canReproduce() {
-		return leftTimeToReproduce <= 0;
+		return leftTimeToReproduce == 0;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param time
+	 */
+	public void setTimeToReproduce(final int time) {
+		TIME_TO_REPRODUCE = time;
+		leftTimeToReproduce = TIME_TO_REPRODUCE;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param time
+	 */
+	public void setTimeToEat(final int time) {
+		TIME_TO_EAT = time;
+		leftTimeToEat = TIME_TO_EAT;
 	}
 
 }
