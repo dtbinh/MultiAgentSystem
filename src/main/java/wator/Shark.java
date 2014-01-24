@@ -62,18 +62,23 @@ public class Shark extends Agent {
 			}
 		}
 
+		if (isStarved()) {
+			setDead(true);
+			return;
+		}
 		if (agentToEat != null) {
+			if (canReproduce()) {
+				reproduce();
+			}
 			eat(agentToEat);
+			moveTo(agentToEat.getCoordonnees());
 		} else {
 			if (coordToMove != null) {
 				if (canReproduce()) {
-					reproduce(coordToMove);
+					reproduce();
 				}
 				moveTo(coordToMove);
 			}
-		}
-		if (isStarved()) {
-			setDead(true);
 		}
 
 	}
@@ -88,7 +93,6 @@ public class Shark extends Agent {
 
 	protected void eat(Agent agent) {
 		kill(agent);
-		moveTo(agent.getCoordonnees());
 		leftTimeToEat = TIME_TO_EAT;
 	}
 
@@ -98,11 +102,10 @@ public class Shark extends Agent {
 		leftTimeToReproduce--;
 	}
 
-	protected void reproduce(Coordonnees thisToCoord) {
-		Statistique.getInstance().addShark(1);
+	protected void reproduce() {
 		Agent babyShark = new Shark(coordonnees, environnement);
 		leftTimeToReproduce = TIME_TO_REPRODUCE;
-		super.reproduce(babyShark, thisToCoord);
+		super.reproduce(babyShark);
 	}
 
 	private boolean canReproduce() {

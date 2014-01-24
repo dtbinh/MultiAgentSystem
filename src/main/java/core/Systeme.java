@@ -53,11 +53,7 @@ public class Systeme extends Observable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		// Collections.shuffle(new ArrayList<>(agents));
-		// Iterator<Agent> agentITE = agents.iterator();
-		// Agent agent = null;
 
-		// while (agentITE.hasNext()) {
 		Object agentClone = ((ArrayList) agents).clone();
 		for (Object objet : (ArrayList) agentClone) {
 			Agent agent = (Agent) objet;
@@ -81,30 +77,18 @@ public class Systeme extends Observable {
 				}
 			}
 		}
-		// System.out.println("Agent " + agents);
-		// System.out.println("Add " + toAdd);
-		// System.out.println("Delete " + toDelete);
 		Statistique.getInstance().setStats(
 				o + ";" + t + ";" + s + ";" + agents.size());
-		// System.out.println("=========================================");
 	}
 
 	private void updateAgentLists() {
-		//
-		// for (Agent agent : toDelete) {
-		// agents.remove(agent);
-		// }
-		// toDelete.clear();
-
 		for (Agent a : toAdd) {
 			agents.add(a);
 		}
 		toAdd.clear();
-
 	}
 
 	public void removeAgent(Agent agent) {
-		// toDelete.add(agent);
 		agents.remove(agent);
 		environnement.setPositionAgent(agent.coordonnees, false);
 	}

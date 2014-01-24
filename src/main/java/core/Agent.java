@@ -75,8 +75,7 @@ public abstract class Agent {
 
 	}
 
-	protected void reproduce(Agent newAgent, Coordonnees thisToCoord) {
-		moveTo(thisToCoord);
+	protected void reproduce(Agent newAgent) {
 		systeme.newAgent(newAgent);
 	}
 

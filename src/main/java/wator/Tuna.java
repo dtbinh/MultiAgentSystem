@@ -36,8 +36,7 @@ public class Tuna extends Agent {
 		for (Coordonnees voisin : voisins) {
 			if (canMove(voisin)) {
 				if (canReproduce()) {
-					reproduce(voisin);
-				} else {
+					reproduce();
 					moveTo(voisin);
 				}
 				return;
@@ -54,10 +53,10 @@ public class Tuna extends Agent {
 		leftTimeToReproduce--;
 	}
 
-	protected void reproduce(Coordonnees thisToCoord) {
+	protected void reproduce() {
 		Statistique.getInstance().addTuna(1);
 		Agent babyTuna = new Tuna(coordonnees, environnement);
 		leftTimeToReproduce = TIME_TO_REPRODUCE;
-		super.reproduce(babyTuna, thisToCoord);
+		super.reproduce(babyTuna);
 	}
 }

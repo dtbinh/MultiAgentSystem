@@ -16,7 +16,7 @@ public class Wator {
 
 		int tailleEnv = 50;
 		int eatShark = 3;
-		int reproductionShark = 5;
+		int reproductionShark = 4;
 		int reproductionTuna = 3;
 
 		int shark = 50;
