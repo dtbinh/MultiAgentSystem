@@ -15,13 +15,14 @@ public class Wator {
 		final int reproductionShark = 4;
 		final int reproductionTuna = 3;
 
-		final int initialSharkNumber = 1;
-		final int initialTunaNumber = 10;
+		final int initialNumberOfShark = 1;
+		final int initialNumberOfTuna = 10;
 
 		final long pourcentageAffichage = 100;
 		final long tempsAttenteAffichage = 50;
 
-		final Environnement ocean = new Ocean(tailleEnv);
+		final Environnement ocean = new Ocean(tailleEnv, initialNumberOfShark,
+				initialNumberOfTuna);
 		final Systeme systeme = new Systeme(ocean);
 		systeme.setWaitingTime(tempsAttenteAffichage);
 		systeme.setSpeed(pourcentageAffichage);

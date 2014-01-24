@@ -35,7 +35,6 @@ public class Systeme extends Observable {
 	 * Run one turn of the system
 	 */
 	public void runOneTurn() {
-
 		slowExecution();
 
 		setChanged();
