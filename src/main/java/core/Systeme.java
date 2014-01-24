@@ -13,7 +13,7 @@ import wator.Tuna;
 
 public class Systeme extends Observable {
 
-	protected ConcurrentLinkedQueue<Agent> agents;
+	protected List<Agent> agents;
 	// protected List<Agent> toDelete;
 	protected List<Agent> toAdd;
 	protected Environnement environnement;
@@ -22,7 +22,7 @@ public class Systeme extends Observable {
 	protected Long speed = 100L;
 
 	public Systeme(Environnement env, Vue vue) {
-		agents = new ConcurrentLinkedQueue<Agent>();
+		agents = new ArrayList<Agent>();
 		// toDelete = new ArrayList<Agent>();
 		toAdd = new ArrayList<Agent>();
 		environnement = env;
@@ -53,12 +53,14 @@ public class Systeme extends Observable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Collections.shuffle(new ArrayList<>(agents));
-		Iterator<Agent> agentITE = agents.iterator();
-		Agent agent = null;
+		// Collections.shuffle(new ArrayList<>(agents));
+		// Iterator<Agent> agentITE = agents.iterator();
+		// Agent agent = null;
 
-		while (agentITE.hasNext()) {
-			agent = agentITE.next();
+		// while (agentITE.hasNext()) {
+		Object agentClone = ((ArrayList) agents).clone();
+		for (Object objet : (ArrayList) agentClone) {
+			Agent agent = (Agent) objet;
 			agent.action();
 		}
 		updateAgentLists();

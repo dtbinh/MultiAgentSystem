@@ -14,13 +14,13 @@ public class Wator {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		int tailleEnv = 40;
-		int eatShark = 2;
-		int reproductionShark = 4;
-		int reproductionTuna = 2;
+		int tailleEnv = 50;
+		int eatShark = 3;
+		int reproductionShark = 5;
+		int reproductionTuna = 3;
 
 		int shark = 50;
-		int tuna = 200;
+		int tuna = 100;
 
 		long pourcentageAffichage = 100;
 		long tempsAttenteAffichage = 50;
