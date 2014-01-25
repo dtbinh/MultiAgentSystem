@@ -13,15 +13,15 @@ public class Ocean implements Environnement {
 
 	private Systeme systeme;
 
-	private Case[][] grille;
+	private final Case[][] grille;
 
-	private int tailleX;
+	private final int tailleX;
 
-	private int tailleY;
+	private final int tailleY;
 
-	private boolean isTore;
+	private final boolean isTore;
 
-	private List<Coordonnees> coordonneesDeLaGrille = new ArrayList<Coordonnees>();
+	private final List<Coordonnees> coordonneesDeLaGrille = new ArrayList<Coordonnees>();
 
 	/**
 	 * Constructor
@@ -30,28 +30,23 @@ public class Ocean implements Environnement {
 	 * @param tailleY
 	 * @param initialNumberOfTuna
 	 * @param initialNumberOfShark
+	 * @param reproductionTuna
+	 * @param reproductionShark
+	 * @param timeToBeStarved
 	 * @param isTore
 	 */
 	public Ocean(final int tailleX, final int tailleY,
 			final int initialNumberOfShark, final int initialNumberOfTuna,
-			final boolean isTore) {
+			final int timeToBeStarved, final int reproductionShark,
+			final int reproductionTuna, final boolean isTore) {
+
 		this.tailleX = tailleX;
 		this.tailleY = tailleY;
 		this.isTore = isTore;
 		grille = new Case[tailleX][tailleY];
 
-		initGrille(initialNumberOfShark, initialNumberOfTuna);
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param taille
-	 * @param isTore
-	 */
-	public Ocean(final int taille, final int initialNumberOfShark,
-			final int initialNumberOfTuna, final boolean isTore) {
-		this(taille, taille, initialNumberOfShark, initialNumberOfTuna, isTore);
+		initGrille(initialNumberOfShark, initialNumberOfTuna, timeToBeStarved,
+				reproductionShark, reproductionTuna);
 	}
 
 	/**
@@ -63,9 +58,10 @@ public class Ocean implements Environnement {
 	 * @param timeToBeStarved
 	 */
 	public Ocean(final int taille, final int initialNumberOfShark,
-			final int initialNumberOfTuna, int timeToBeStarved,
-			int reproductionShark, int reproductionTuna) {
-		this(taille, taille, initialNumberOfShark, initialNumberOfTuna, true);
+			final int initialNumberOfTuna, final int timeToBeStarved,
+			final int reproductionShark, final int reproductionTuna) {
+		this(taille, taille, initialNumberOfShark, initialNumberOfTuna,
+				timeToBeStarved, reproductionShark, reproductionTuna, true);
 	}
 
 	/**
@@ -73,11 +69,16 @@ public class Ocean implements Environnement {
 	 * 
 	 * @param initialNumberOfShark
 	 * @param initialNumberOfTuna
+	 * @param reproductionTuna
+	 * @param reproductionShark
+	 * @param timeToBeStarved
 	 */
 	private void initGrille(final int initialNumberOfShark,
-			final int initialNumberOfTuna) {
+			final int initialNumberOfTuna, final int timeToBeStarved,
+			final int reproductionShark, final int reproductionTuna) {
 		remplirGrilleAvecCasesVides();
-		initGrilleWithSharksAndTunas(initialNumberOfShark, initialNumberOfTuna);
+		initGrilleWithSharksAndTunas(initialNumberOfShark, initialNumberOfTuna,
+				timeToBeStarved, reproductionShark, reproductionTuna);
 	}
 
 	/**
@@ -98,21 +99,25 @@ public class Ocean implements Environnement {
 	 * 
 	 * @param initialNumberOfShark
 	 * @param initialNumberOfTuna
+	 * @param reproductionTuna
+	 * @param reproductionShark
+	 * @param timeToBeStarved
 	 */
 	private void initGrilleWithSharksAndTunas(final int initialNumberOfShark,
-			final int initialNumberOfTuna) {
+			final int initialNumberOfTuna, final int timeToBeStarved,
+			final int reproductionShark, final int reproductionTuna) {
 
 		Collections.shuffle(coordonneesDeLaGrille);
 		int i = 0;
 		for (; i < initialNumberOfShark; i++) {
 			final Coordonnees coordonnees = coordonneesDeLaGrille.get(i);
 			grille[coordonnees.getX()][coordonnees.getY()].setAgent(new Shark(
-					coordonnees, this));
+					coordonnees, this, timeToBeStarved, reproductionShark));
 		}
 		for (; i < initialNumberOfTuna + initialNumberOfShark; i++) {
 			final Coordonnees coordonnees = coordonneesDeLaGrille.get(i);
 			grille[coordonnees.getX()][coordonnees.getY()].setAgent(new Tuna(
-					coordonnees, this));
+					coordonnees, this, reproductionTuna));
 		}
 
 	}
@@ -147,12 +152,12 @@ public class Ocean implements Environnement {
 	}
 
 	@Override
-	public Case getCaseFromCoordonnees(Coordonnees coordonnees) {
+	public Case getCaseFromCoordonnees(final Coordonnees coordonnees) {
 		return getCaseFromCoordonnees(coordonnees.getX(), coordonnees.getY());
 	}
 
 	@Override
-	public Case getCaseFromCoordonnees(int x, int y) {
+	public Case getCaseFromCoordonnees(final int x, final int y) {
 		return grille[x][y];
 	}
 
@@ -177,7 +182,7 @@ public class Ocean implements Environnement {
 	}
 
 	@Override
-	public void setSysteme(Systeme systeme) {
+	public void setSysteme(final Systeme systeme) {
 		this.systeme = systeme;
 
 	}

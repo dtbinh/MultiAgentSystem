@@ -11,9 +11,26 @@ import core.Environnement;
 
 public class Tuna extends Fish {
 
+	/**
+	 * Construtor
+	 * 
+	 * @param coordonnees
+	 * @param environnement
+	 */
 	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
 		super(coordonnees, environnement, Color.MAGENTA);
 		setTimeToReproduce(2);
+	}
+
+	/**
+	 * @param coordonnees
+	 * @param ocean
+	 * @param reproductionTuna
+	 */
+	public Tuna(final Coordonnees coordonnees,
+			final Environnement environnement, final int reproductionTuna) {
+		this(coordonnees, environnement);
+		setTimeToReproduce(reproductionTuna);
 	}
 
 	@Override
@@ -51,7 +68,9 @@ public class Tuna extends Fish {
 		if (canMove(casesVoisinesLibres)) {
 
 			if (canReproduce()) {
-				birth(new Tuna(coordonnees, environnement));
+				final Tuna babyTuna = new Tuna(coordonnees, environnement);
+				babyTuna.setTimeToReproduce(TIME_TO_REPRODUCE);
+				birth(babyTuna);
 				leftTimeToReproduce = TIME_TO_REPRODUCE;
 			} else {
 				emptyCurrentCase();

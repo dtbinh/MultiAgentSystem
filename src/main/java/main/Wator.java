@@ -14,16 +14,16 @@ public class Wator {
 		final int tailleEnv = 75;
 		final int tailleVue = 600;
 
-		final int timeToBeStarved = 5;
+		final int timeToBeStarved = 10;
 
-		final int reproductionShark = 2;
-		final int reproductionTuna = 3;
+		final int reproductionShark = 10;
+		final int reproductionTuna = 5;
 
 		final int initialNumberOfShark = 100;
 		final int initialNumberOfTuna = 300;
 
 		final long pourcentageAffichage = 10;
-		final long tempsAttenteAffichage = 500;
+		final long tempsAttenteAffichage = 50;
 
 		final Environnement ocean = new Ocean(tailleEnv, initialNumberOfShark,
 				initialNumberOfTuna, timeToBeStarved, reproductionShark,
@@ -31,7 +31,7 @@ public class Wator {
 		final Vue vue = new Vue(ocean, tailleVue, tailleVue);
 		final Systeme systeme = new Systeme(vue, ocean);
 
-		Statistique stat = WatorStat.getInstance();
+		final Statistique stat = WatorStat.getInstance();
 		stat.setEnvironnement(ocean);
 		stat.setFile("WatorStat.csv");
 

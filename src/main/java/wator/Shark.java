@@ -28,6 +28,22 @@ public class Shark extends Fish {
 		setTimeToReproduce(5);
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param coordonnees
+	 * @param ocean
+	 * @param timeToBeStarved
+	 * @param reproductionShark
+	 */
+	public Shark(final Coordonnees coordonnees,
+			final Environnement environnement, final int timeToBeStarved,
+			final int reproductionShark) {
+		this(coordonnees, environnement);
+		setTimeToEat(timeToBeStarved);
+		setTimeToReproduce(reproductionShark);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -100,7 +116,10 @@ public class Shark extends Fish {
 		if (canMove(casesVoisinesLibres)) {
 
 			if (canReproduce()) {
-				birth(new Shark(coordonnees, environnement));
+				final Shark babyShark = new Shark(coordonnees, environnement);
+				babyShark.setTimeToEat(TIME_TO_EAT);
+				babyShark.setTimeToReproduce(TIME_TO_REPRODUCE);
+				birth(babyShark);
 				leftTimeToReproduce = TIME_TO_REPRODUCE;
 			} else {
 				emptyCurrentCase();
