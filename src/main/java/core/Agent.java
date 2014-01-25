@@ -1,7 +1,6 @@
 package core;
 
 import java.awt.Color;
-import java.awt.Component;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;

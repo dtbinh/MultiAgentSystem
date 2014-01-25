@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 
 public class Vue extends JFrame implements Observer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected Environnement environnement;
 	private JPanel grid;
 	private int sizeX;
