@@ -10,4 +10,6 @@ public interface Statistique {
 
 	void update();
 
+	void printEntete();
+
 }

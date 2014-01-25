@@ -19,7 +19,7 @@ public class Wator {
 		final int reproductionShark = 2;
 		final int reproductionTuna = 3;
 
-		final int initialNumberOfShark = 50;
+		final int initialNumberOfShark = 100;
 		final int initialNumberOfTuna = 300;
 
 		final long pourcentageAffichage = 10;

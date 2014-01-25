@@ -21,8 +21,6 @@ public class WatorStat implements Statistique {
 	private WatorStat() {
 		nbShark = 0;
 		nbTuna = 0;
-		line = nbShark + ";" + nbTuna;
-		setEntete();
 	}
 
 	public static Statistique getInstance() {
@@ -37,7 +35,8 @@ public class WatorStat implements Statistique {
 	@Override
 	public void printLineToFile() {
 		try {
-			FileUtils.write(file, line + "\n");
+			line = nbShark + ";" + nbTuna;
+			FileUtils.write(file, line + "\n", true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -63,9 +62,10 @@ public class WatorStat implements Statistique {
 		}
 	}
 
-	private void setEntete() {
+	@Override
+	public void printEntete() {
 		try {
-			FileUtils.write(file, line + "\n");
+			FileUtils.write(file, line + "\n", true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -50,7 +50,8 @@ public class Vue extends JFrame implements Observer {
 				grid.add(c.printCase());
 			}
 		}
-
+		environnement.getSysteme().getStats().update();
+		environnement.getSysteme().getStats().printLineToFile();
 		grid.validate();
 		grid.repaint();
 	}

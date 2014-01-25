@@ -110,4 +110,8 @@ public class Systeme extends Observable {
 		statistique = instance;
 	}
 
+	public Statistique getStats() {
+		return statistique;
+	}
+
 }
