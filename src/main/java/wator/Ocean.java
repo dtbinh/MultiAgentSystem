@@ -85,7 +85,7 @@ public class Ocean implements Environnement {
 		for (int x = 0; x < tailleX; x++) {
 			for (int y = 0; y < tailleY; y++) {
 				final Coordonnees coordonnees = new Coordonnees(x, y);
-				grille[x][y] = new Case();
+				grille[x][y] = new Case(coordonnees);
 				coordonneesDeLaGrille.add(coordonnees);
 			}
 		}

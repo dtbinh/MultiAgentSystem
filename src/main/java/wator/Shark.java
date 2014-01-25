@@ -80,11 +80,6 @@ public class Shark extends Agent {
 			final List<Case> casesVoisinesLibres) {
 
 		if (canEat(casesContenantVoisinsMangeables)) {
-			Collections.shuffle(casesVoisinesLibres);
-
-			final Case caseContenantLaProie = casesContenantVoisinsMangeables
-					.get(0);
-			eat(caseContenantLaProie);
 
 			if (canReproduce()) {
 				birth();
@@ -92,11 +87,19 @@ public class Shark extends Agent {
 				emptyCurrentCase();
 			}
 
-			caseContenantLaProie.setAgent(this);
+			Collections.shuffle(casesContenantVoisinsMangeables);
+			final Case caseContenantVoisinMangeable = casesContenantVoisinsMangeables
+					.get(0);
+			// MAJ des coordonnées du requin
+			setCoordonnees(caseContenantVoisinMangeable.getCoordonnees());
+			// Et déplacement de celui-ci dans sa nouvelle case.
+			caseContenantVoisinMangeable.setAgent(this);
+
 			return;
 		}
 
 		if (canMove(casesVoisinesLibres)) {
+
 			if (canReproduce()) {
 				birth();
 			} else {
@@ -104,7 +107,12 @@ public class Shark extends Agent {
 			}
 
 			Collections.shuffle(casesVoisinesLibres);
-			casesVoisinesLibres.get(0).setAgent(this);
+			final Case caseLibre = casesVoisinesLibres.get(0);
+			// MAJ des coordonnées du requin
+			setCoordonnees(caseLibre.getCoordonnees());
+			// Et déplacement de celui-ci dans sa nouvelle case.
+			caseLibre.setAgent(this);
+
 			return;
 		}
 
@@ -122,15 +130,6 @@ public class Shark extends Agent {
 	 */
 	private void birth() {
 		getCurrentCase().setAgent(new Shark(coordonnees, environnement));
-	}
-
-	/**
-	 * Réalise l'action de manger une proie.
-	 * 
-	 * @param caseContenantLaProie
-	 */
-	private void eat(final Case caseContenantLaProie) {
-		caseContenantLaProie.setAgent(this);
 	}
 
 	/**
