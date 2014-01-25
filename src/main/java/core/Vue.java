@@ -54,6 +54,7 @@ public class Vue extends JFrame implements Observer {
 		grid = new JPanel(gbl);
 	}
 
+	@Override
 	public void update(final Observable o, final Object arg) {
 		grid.removeAll();
 		final int tx = environnement.getTailleX();

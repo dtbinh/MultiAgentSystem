@@ -16,21 +16,30 @@ public class Plateau implements Environnement {
 	protected Systeme systeme;
 	private final List<Coordonnees> coordonneesDeLaGrille = new ArrayList<Coordonnees>();
 
-	public Plateau(int taille) {
+	public Plateau(final int taille) {
 		tailleX = taille;
 		tailleY = taille;
 		grille = new Case[tailleX][tailleY];
-
 		initGrille();
+		setWall();
 
 	}
 
 	private void initGrille() {
 		for (int x = 0; x < tailleX; x++) {
 			for (int y = 0; y < tailleY; y++) {
-				Coordonnees coordonnees = new Coordonnees(x, y);
+				final Coordonnees coordonnees = new Coordonnees(x, y);
 				grille[x][y] = new Case(coordonnees);
 				coordonneesDeLaGrille.add(coordonnees);
+			}
+		}
+	}
+
+	private void setWall() {
+		for (int x = 0; x < tailleX; x++) {
+			for (int y = 0; y < tailleY; y++) {
+				final Coordonnees coordonnees = new Coordonnees(x, y);
+				System.out.println(coordonnees);
 			}
 		}
 	}
@@ -56,12 +65,13 @@ public class Plateau implements Environnement {
 	}
 
 	@Override
-	public void setSysteme(Systeme systeme) {
+	public void setSysteme(final Systeme systeme) {
 		this.systeme = systeme;
 	}
 
 	@Override
-	public List<Coordonnees> getCoordonneesVoisines(Coordonnees coordonnees) {
+	public List<Coordonnees> getCoordonneesVoisines(
+			final Coordonnees coordonnees) {
 		return null;
 	}
 
