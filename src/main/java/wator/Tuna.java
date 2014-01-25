@@ -19,6 +19,12 @@ public class Tuna extends Fish {
 	 */
 	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
 		super(coordonnees, environnement, Color.MAGENTA);
+<<<<<<< HEAD
+=======
+		setTimeToReproduce(2);
+		image = "res/images/tuna.png";
+		setAffichage();
+>>>>>>> origin/master
 	}
 
 	/**

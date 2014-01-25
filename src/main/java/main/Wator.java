@@ -14,16 +14,16 @@ public class Wator {
 		final int tailleEnv = 75;
 		final int tailleVue = 600;
 
-		final int timeToBeStarved = 10;
+		final int timeToBeStarved = -10000;
 
-		final int reproductionShark = 10;
+		final int reproductionShark = 10000;
 		final int reproductionTuna = 5;
 
-		final int initialNumberOfShark = 100;
-		final int initialNumberOfTuna = 300;
+		final int initialNumberOfShark = 1;
+		final int initialNumberOfTuna = 0;
 
 		final long pourcentageAffichage = 10;
-		final long tempsAttenteAffichage = 50;
+		final long tempsAttenteAffichage = 500;
 
 		final Environnement ocean = new Ocean(tailleEnv, initialNumberOfShark,
 				initialNumberOfTuna, timeToBeStarved, reproductionShark,
@@ -41,5 +41,6 @@ public class Wator {
 		ocean.setSysteme(systeme);
 		vue.setVisible(true);
 		systeme.run();
+
 	}
 }

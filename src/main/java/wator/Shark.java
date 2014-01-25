@@ -24,6 +24,11 @@ public class Shark extends Fish {
 	public Shark(final Coordonnees coordonnees,
 			final Environnement environnement) {
 		super(coordonnees, environnement, new Color(30, 35, 38));
+
+		setTimeToEat(3);
+		setTimeToReproduce(5);
+		image = "res/images/shark.png";
+		setAffichage();
 	}
 
 	/**
