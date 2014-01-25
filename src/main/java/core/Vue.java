@@ -2,8 +2,6 @@ package core;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
@@ -28,7 +26,7 @@ public class Vue extends JFrame implements Observer {
 
 	// TODO mettre le jscrollpane
 	public Vue(final Environnement environnement, final int sizeX,
-			final int sizeY, int cellSize) {
+			final int sizeY, final int cellSize) {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.environnement = environnement;
@@ -51,12 +49,11 @@ public class Vue extends JFrame implements Observer {
 	}
 
 	private void initGridPane() {
-		GridLayout gbl = new GridLayout(environnement.getTailleX(),
+		final GridLayout gbl = new GridLayout(environnement.getTailleX(),
 				environnement.getTailleY());
 		grid = new JPanel(gbl);
 	}
 
-	@Override
 	public void update(final Observable o, final Object arg) {
 		grid.removeAll();
 		final int tx = environnement.getTailleX();
@@ -64,7 +61,7 @@ public class Vue extends JFrame implements Observer {
 		for (int x = 0; x < tx; x++) {
 			for (int y = 0; y < ty; y++) {
 				final Case c = environnement.getCaseFromCoordonnees(x, y);
-				JComponent jc = c.printCase();
+				final JComponent jc = c.printCase();
 				jc.setPreferredSize(new Dimension(cellSize, cellSize));
 				grid.add(jc);
 			}
