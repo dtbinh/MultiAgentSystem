@@ -1,9 +1,7 @@
 package core;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
@@ -16,8 +14,6 @@ public abstract class Agent {
 	protected Environnement environnement;
 
 	protected Coordonnees coordonnees;
-
-	protected boolean isDead;
 
 	protected int age = 0;
 
@@ -39,7 +35,6 @@ public abstract class Agent {
 		this.environnement = environnement;
 		this.coordonnees = coordonnees;
 		this.color = color;
-		isDead = false;
 		setAffichage();
 	}
 
