@@ -18,4 +18,8 @@ public interface Environnement {
 
 	List<Coordonnees> getCoordonneesDeLaGrille();
 
+	Case getCaseFromCoordonnees(Coordonnees coordonnees);
+
+	Case getCaseFromCoordonnees(int x, int y);
+
 }

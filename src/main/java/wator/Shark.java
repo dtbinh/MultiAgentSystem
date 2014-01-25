@@ -1,16 +1,21 @@
 package wator;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.border.BevelBorder;
 
 import lombok.Data;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
-@Data
 public class Shark extends Fish {
 
 	private int TIME_TO_EAT;
@@ -25,7 +30,7 @@ public class Shark extends Fish {
 	 */
 	public Shark(final Coordonnees coordonnees,
 			final Environnement environnement) {
-		super(coordonnees, environnement, Color.RED);
+		super(coordonnees, environnement, new Color(30, 35, 38));
 		setTimeToEat(5);
 		setTimeToReproduce(7);
 	}
@@ -56,9 +61,11 @@ public class Shark extends Fish {
 
 		for (final Coordonnees voisin : environnement
 				.getCoordonneesVoisines(coordonnees)) {
-			final Case caseVoisine = environnement.getGrille()[voisin.getX()][voisin
-					.getY()];
-
+			// final Case caseVoisine =
+			// environnement.getGrille()[voisin.getX()][voisin
+			// .getY()];
+			final Case caseVoisine = environnement
+					.getCaseFromCoordonnees(voisin);
 			if (caseVoisine.isVide()) {
 				casesVoisinesLibres.add(caseVoisine);
 			} else if (caseVoisine.getAgent() instanceof Tuna) {
@@ -89,10 +96,10 @@ public class Shark extends Fish {
 			Collections.shuffle(casesContenantVoisinsMangeables);
 			final Case caseContenantVoisinMangeable = casesContenantVoisinsMangeables
 					.get(0);
-			// MAJ des coordonnées du requin
-			setCoordonnees(caseContenantVoisinMangeable.getCoordonnees());
 			// Et déplacement de celui-ci dans sa nouvelle case.
 			caseContenantVoisinMangeable.setAgent(this);
+			// MAJ des coordonnées du requin
+			setCoordonnees(caseContenantVoisinMangeable.getCoordonnees());
 
 			return;
 		}

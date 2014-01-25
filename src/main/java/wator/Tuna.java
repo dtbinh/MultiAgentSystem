@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.border.BevelBorder;
+
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
@@ -12,7 +17,7 @@ import core.Environnement;
 public class Tuna extends Fish {
 
 	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
-		super(coordonnees, environnement, Color.green);
+		super(coordonnees, environnement, new Color(255, 204, 153));
 		setTimeToReproduce(4);
 	}
 
@@ -31,9 +36,11 @@ public class Tuna extends Fish {
 
 		for (final Coordonnees voisin : environnement
 				.getCoordonneesVoisines(coordonnees)) {
-			final Case caseVoisine = environnement.getGrille()[voisin.getX()][voisin
-					.getY()];
-
+			// final Case caseVoisine =
+			// environnement.getGrille()[voisin.getX()][voisin
+			// .getY()];
+			final Case caseVoisine = environnement
+					.getCaseFromCoordonnees(voisin);
 			if (caseVoisine.isVide()) {
 				casesVoisinesLibres.add(caseVoisine);
 			}

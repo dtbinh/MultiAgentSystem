@@ -1,10 +1,14 @@
 package core;
 
 import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.border.BevelBorder;
 
 import lombok.Data;
 
-@Data
 public abstract class Agent {
 
 	protected Environnement environnement;
@@ -19,6 +23,8 @@ public abstract class Agent {
 
 	protected boolean aDejaJoue = false;
 
+	protected JComponent monAffichage;
+
 	/**
 	 * Construtor
 	 * 
@@ -32,6 +38,14 @@ public abstract class Agent {
 		this.coordonnees = coordonnees;
 		this.color = color;
 		isDead = false;
+		setAffichage();
+	}
+
+	private void setAffichage() {
+		monAffichage = new JLabel();
+		monAffichage.setBackground(color);
+		monAffichage.setOpaque(true);
+		monAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));
 	}
 
 	/**
@@ -50,7 +64,25 @@ public abstract class Agent {
 	 * @return
 	 */
 	protected Case getCurrentCase() {
-		return environnement.getGrille()[coordonnees.getX()][coordonnees.getY()];
+		// return
+		// environnement.getGrille()[coordonnees.getX()][coordonnees.getY()];
+		return environnement.getCaseFromCoordonnees(coordonnees);
 	}
 
+	protected void setCoordonnees(Coordonnees coordonnees) {
+		this.coordonnees = coordonnees;
+	}
+
+	public void setADejaJoue(boolean b) {
+		aDejaJoue = b;
+
+	}
+
+	public JComponent print() {
+		return monAffichage;
+	}
+
+	public Coordonnees getCoordonnees() {
+		return coordonnees;
+	}
 }

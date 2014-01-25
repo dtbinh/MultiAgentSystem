@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
+import core.Agent;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 import core.Systeme;
 
-@Data
 public class Ocean implements Environnement {
 
 	private Systeme systeme;
@@ -107,12 +107,12 @@ public class Ocean implements Environnement {
 			grille[coordonnees.getX()][coordonnees.getY()].setAgent(new Shark(
 					coordonnees, this));
 		}
-
 		for (; i < initialNumberOfTuna + initialNumberOfShark; i++) {
 			final Coordonnees coordonnees = coordonneesDeLaGrille.get(i);
 			grille[coordonnees.getX()][coordonnees.getY()].setAgent(new Tuna(
 					coordonnees, this));
 		}
+
 	}
 
 	@Override
@@ -144,4 +144,44 @@ public class Ocean implements Environnement {
 		return res;
 	}
 
+	@Override
+	public Case getCaseFromCoordonnees(Coordonnees coordonnees) {
+		return getCaseFromCoordonnees(coordonnees.getX(), coordonnees.getY());
+	}
+
+	@Override
+	public Case getCaseFromCoordonnees(int x, int y) {
+		return grille[x][y];
+	}
+
+	@Override
+	public int getTailleX() {
+		return tailleX;
+	}
+
+	@Override
+	public int getTailleY() {
+		return tailleY;
+	}
+
+	@Override
+	public Case[][] getGrille() {
+		return grille;
+	}
+
+	@Override
+	public Systeme getSysteme() {
+		return systeme;
+	}
+
+	@Override
+	public void setSysteme(Systeme systeme) {
+		this.systeme = systeme;
+
+	}
+
+	@Override
+	public List<Coordonnees> getCoordonneesDeLaGrille() {
+		return coordonneesDeLaGrille;
+	}
 }

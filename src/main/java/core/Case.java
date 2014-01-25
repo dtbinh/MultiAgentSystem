@@ -1,13 +1,18 @@
 package core;
 
-import lombok.Data;
+import java.awt.Color;
 
-@Data
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.border.BevelBorder;
+
 public class Case {
 
 	private Coordonnees coordonnees;
 
 	private Agent agent;
+
+	private JComponent defaultAffichage;
 
 	/**
 	 * Constructor
@@ -16,6 +21,10 @@ public class Case {
 	 */
 	public Case(final Coordonnees coordonnees) {
 		this.coordonnees = coordonnees;
+		defaultAffichage = new JLabel();
+		defaultAffichage.setOpaque(true);
+		defaultAffichage.setBackground(new Color(0, 105, 148));
+		defaultAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));
 	}
 
 	/**
@@ -34,6 +43,22 @@ public class Case {
 	 */
 	public boolean isNotVide() {
 		return !isVide();
+	}
+
+	public JComponent printCase() {
+		return isVide() ? defaultAffichage : agent.print();
+	}
+
+	public Agent getAgent() {
+		return agent;
+	}
+
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
+
+	public Coordonnees getCoordonnees() {
+		return coordonnees;
 	}
 
 }

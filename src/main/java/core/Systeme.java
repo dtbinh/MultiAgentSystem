@@ -4,12 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
-import lombok.Data;
-
-@Data
 public class Systeme extends Observable {
 
 	protected Environnement environnement;
+	protected Vue vue;
 
 	protected Long waitingTime = 50L;
 	protected Long speed = 100L;
@@ -20,16 +18,32 @@ public class Systeme extends Observable {
 	 * @param env
 	 * @param vue
 	 */
-	public Systeme(final Environnement env) {
+	public Systeme(final Vue vue, final Environnement env) {
 		environnement = env;
+		this.vue = vue;
+		addObserver(vue);
 	}
 
 	/**
 	 * Run the system
 	 */
 	public void run() {
+		setChanged();
+		this.notifyObservers();
 		while (true) {
 			runOneTurn();
+		}
+	}
+
+	/**
+	 * Run the system
+	 */
+	public void run(int n) {
+		setChanged();
+		this.notifyObservers();
+		while (n > 0) {
+			runOneTurn();
+			n--;
 		}
 	}
 
@@ -49,13 +63,17 @@ public class Systeme extends Observable {
 
 		for (final Coordonnees coordonnees : coordonnéesDeLaGrille) {
 
-			final Case currentCase = environnement.getGrille()[coordonnees.getX()][coordonnees
-					.getY()];
-
+			// final Case currentCase =
+			// environnement.getGrille()[coordonnees.getX()][coordonnees
+			// .getY()];
+			final Case currentCase = environnement
+					.getCaseFromCoordonnees(coordonnees);
 			if (currentCase.isNotVide()) {
 				currentCase.getAgent().action();
 			}
 		}
+		setChanged();
+		this.notifyObservers();
 	}
 
 	/**
@@ -64,8 +82,10 @@ public class Systeme extends Observable {
 	private void resetADejaJouerBooleanOfAllAgents() {
 		for (final Coordonnees coordonnees : environnement
 				.getCoordonneesDeLaGrille()) {
-			final Case caseParcouru = environnement.getGrille()[coordonnees
-					.getX()][coordonnees.getY()];
+			// final Case caseParcouru = environnement.getGrille()[coordonnees
+			// .getX()][coordonnees.getY()];
+			final Case caseParcouru = environnement
+					.getCaseFromCoordonnees(coordonnees);
 			if (caseParcouru.isNotVide()) {
 				caseParcouru.getAgent().setADejaJoue(false);
 			}
@@ -76,9 +96,17 @@ public class Systeme extends Observable {
 		try {
 			Thread.sleep(waitingTime * speed / 100);
 		} catch (final InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void setWaitingTime(long tempsAttenteAffichage) {
+		waitingTime = tempsAttenteAffichage;
+	}
+
+	public void setSpeed(long pourcentageAffichage) {
+		speed = pourcentageAffichage;
+
 	}
 
 }
