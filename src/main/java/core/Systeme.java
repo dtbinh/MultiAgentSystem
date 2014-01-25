@@ -49,11 +49,11 @@ public class Systeme extends Observable {
 
 		for (final Coordonnees coordonnees : coordonnéesDeLaGrille) {
 
-			final Case case0 = environnement.getGrille()[coordonnees.getX()][coordonnees
+			final Case currentCase = environnement.getGrille()[coordonnees.getX()][coordonnees
 					.getY()];
 
-			if (case0.isNotVide()) {
-				case0.getAgent().action();
+			if (currentCase.isNotVide()) {
+				currentCase.getAgent().action();
 			}
 		}
 	}
