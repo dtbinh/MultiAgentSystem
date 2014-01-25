@@ -4,9 +4,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Systeme extends Observable {
 
 	protected Environnement environnement;
@@ -73,6 +75,7 @@ public class Systeme extends Observable {
 				currentCase.getAgent().action();
 			}
 		}
+
 		setChanged();
 		this.notifyObservers();
 	}
