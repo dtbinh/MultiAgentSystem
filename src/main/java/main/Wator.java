@@ -12,6 +12,7 @@ public class Wator {
 	public static void main(final String[] args) throws InterruptedException {
 
 		final int tailleEnv = 75;
+
 		final int tailleVue = 600;
 		final int tailleCase = 5;
 
@@ -21,6 +22,7 @@ public class Wator {
 		final int reproductionTuna = 5;
 
 		final int initialNumberOfShark = 200;
+
 		final int initialNumberOfTuna = 800;
 
 		final long pourcentageAffichage = 10;
