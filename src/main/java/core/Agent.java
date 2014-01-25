@@ -24,8 +24,6 @@ public abstract class Agent {
 
 	protected JComponent monAffichage;
 
-	protected String image;
-
 	/**
 	 * Construtor
 	 * 
@@ -39,17 +37,12 @@ public abstract class Agent {
 		this.coordonnees = coordonnees;
 		this.color = color;
 		isDead = false;
+		setAffichage();
 	}
 
 	protected void setAffichage() {
-		if (!image.equals("")) {
-			monAffichage = new JLabel(new ImageIcon(image));
-			monAffichage.setPreferredSize(new Dimension(24, 24));
-		} else {
-			monAffichage = new JLabel();
-			monAffichage.setBackground(color);
-		}
-		monAffichage.setMinimumSize(new Dimension(24, 24));
+		monAffichage = new JLabel();
+		monAffichage.setBackground(color);
 		monAffichage.setOpaque(true);
 		monAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));
 	}

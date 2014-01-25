@@ -28,8 +28,6 @@ public class Shark extends Fish {
 		super(coordonnees, environnement, new Color(30, 35, 38));
 		setTimeToEat(3);
 		setTimeToReproduce(5);
-		image = "res/images/shark.png";
-		setAffichage();
 
 	}
 

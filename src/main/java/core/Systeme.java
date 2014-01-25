@@ -85,7 +85,6 @@ public class Systeme extends Observable {
 			if (caseParcouru.isNotVide()) {
 				caseParcouru.getAgent().setADejaJoue(false);
 			}
-
 		}
 	}
 

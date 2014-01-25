@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,14 +24,17 @@ public class Vue extends JFrame implements Observer {
 	private JScrollPane scrollPane;
 	private final int sizeX;
 	private final int sizeY;
+	private final int cellSize;
 
 	// TODO mettre le jscrollpane
 	public Vue(final Environnement environnement, final int sizeX,
-			final int sizeY) {
+			final int sizeY, int cellSize) {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.environnement = environnement;
+		this.cellSize = cellSize;
 		initFrame();
+
 	}
 
 	private void initFrame() {
@@ -47,24 +51,22 @@ public class Vue extends JFrame implements Observer {
 	}
 
 	private void initGridPane() {
-		GridBagLayout gbl = new GridBagLayout();
+		GridLayout gbl = new GridLayout(environnement.getTailleX(),
+				environnement.getTailleY());
 		grid = new JPanel(gbl);
 	}
 
 	@Override
 	public void update(final Observable o, final Object arg) {
-		GridBagConstraints gbc = new GridBagConstraints();
 		grid.removeAll();
 		final int tx = environnement.getTailleX();
 		final int ty = environnement.getTailleY();
 		for (int x = 0; x < tx; x++) {
 			for (int y = 0; y < ty; y++) {
 				final Case c = environnement.getCaseFromCoordonnees(x, y);
-				gbc.gridx = x;
-				gbc.gridy = y;
-				if (c.hasChanged()) {
-					grid.add(c.printCase(), gbc);
-				}
+				JComponent jc = c.printCase();
+				jc.setPreferredSize(new Dimension(cellSize, cellSize));
+				grid.add(jc);
 			}
 		}
 		environnement.getSysteme().getStats().update();
