@@ -95,44 +95,52 @@ public class Shark extends Fish {
 	private void makeAction(final List<Case> casesContenantVoisinsMangeables,
 			final List<Case> casesVoisinesLibres) {
 
+		final boolean canMove = canMove(casesVoisinesLibres);
+
+		// 1. S'il peut bouger et qu'il est en capacité de se reporduire il se
+		// reproduit et bouge mais ne fait rien d'autre.
+		if (canReproduce() && canMove) {
+			birth(new Shark(coordonnees, environnement, TIME_TO_EAT,
+					TIME_TO_REPRODUCE));
+			move(casesVoisinesLibres);
+
+			return;
+		}
+
+		// 2. S'il peut manger, il mange et il bouge sur la case de la proie
+		// mangé et ne fait rien d'autre.
 		if (canEat(casesContenantVoisinsMangeables)) {
-
-			if (canReproduce()) {
-				birth(new Shark(coordonnees, environnement, TIME_TO_EAT,
-						TIME_TO_REPRODUCE));
-			} else {
-				emptyCurrentCase();
-			}
-
-			Collections.shuffle(casesContenantVoisinsMangeables);
-			final Case caseContenantVoisinMangeable = casesContenantVoisinsMangeables
-					.get(0);
-			// MAJ des coordonnées du requin
-			setCoordonnees(caseContenantVoisinMangeable.getCoordonnees());
-			// Et déplacement de celui-ci dans sa nouvelle case.
-			caseContenantVoisinMangeable.setAgent(this);
-			// et on remet son temps pour manger a TIME TO EAT
+			// le move, en remplacent l'agent de la case où l'on se déplace
+			// simule le fait de le manger.
+			move(casesContenantVoisinsMangeables);
+			// et on remet son temps pour manger a TIME_TO_EAT
 			leftTimeToEat = TIME_TO_EAT;
 
 			return;
 		}
 
+		// 3. S'il peut bouger il bouge sur une case libre autour de lui au
+		// hasard et ne fait rien d'autre.
 		if (canMove(casesVoisinesLibres)) {
-
-			if (canReproduce()) {
-				birth(new Shark(coordonnees, environnement, TIME_TO_EAT,
-						TIME_TO_REPRODUCE));
-			} else {
-				emptyCurrentCase();
-			}
-
-			Collections.shuffle(casesVoisinesLibres);
-			final Case caseLibre = casesVoisinesLibres.get(0);
-			// MAJ des coordonnées du requin
-			setCoordonnees(caseLibre.getCoordonnees());
-			// Et déplacement de celui-ci dans sa nouvelle case.
-			caseLibre.setAgent(this);
+			move(casesVoisinesLibres);
 		}
+	}
+
+	/**
+	 * @param casesVoisines
+	 */
+	private void move(final List<Case> casesVoisines) {
+		if (!canReproduce()) {
+			// On vide la case actuel si on ne s'est pas reproduit. (sinon elle
+			// contient notre bébé et il ne faut pas l'effacer)
+			emptyCurrentCase();
+		}
+		Collections.shuffle(casesVoisines);
+		final Case caseVoisine = casesVoisines.get(0);
+		// MAJ des coordonnées du requin
+		setCoordonnees(caseVoisine.getCoordonnees());
+		// Et déplacement de celui-ci dans sa nouvelle case.
+		caseVoisine.setAgent(this);
 	}
 
 	/**

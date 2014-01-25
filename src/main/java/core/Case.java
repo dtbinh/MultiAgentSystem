@@ -2,7 +2,6 @@ package core;
 
 import java.awt.Color;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
