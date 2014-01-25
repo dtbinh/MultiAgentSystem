@@ -119,7 +119,7 @@ public class Ocean implements Environnement {
 	public List<Coordonnees> getCoordonneesVoisines(
 			final Coordonnees coordonnees) {
 
-		// TODO RAL : todo WHAT ?
+		// TODO RAL : Ajouter le code pour le cas d'une grille non torique.
 
 		final List<Coordonnees> res = new ArrayList<Coordonnees>();
 		final int posX = coordonnees.getX();
@@ -140,8 +140,6 @@ public class Ocean implements Environnement {
 
 			return res;
 		}
-
-		// TODO RAL : Ajouter le code pour le cas d'une grille non torique.
 
 		return res;
 	}
