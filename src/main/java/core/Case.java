@@ -2,6 +2,7 @@ package core;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
@@ -14,6 +15,8 @@ public class Case {
 
 	private JComponent defaultAffichage;
 
+	private boolean hasChanged;
+
 	/**
 	 * Constructor
 	 * 
@@ -21,10 +24,20 @@ public class Case {
 	 */
 	public Case(final Coordonnees coordonnees) {
 		this.coordonnees = coordonnees;
-		defaultAffichage = new JLabel();
+		defaultAffichage = new JLabel(new ImageIcon("res/images/water.png"));
 		defaultAffichage.setOpaque(true);
 		defaultAffichage.setBackground(new Color(0, 105, 148));
 		defaultAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		hasChanged = true;
+	}
+
+	public void resetChanged() {
+		hasChanged = false;
+	}
+
+	public boolean hasChanged() {
+
+		return hasChanged;
 	}
 
 	/**
@@ -55,6 +68,7 @@ public class Case {
 
 	public void setAgent(Agent agent) {
 		this.agent = agent;
+		hasChanged = true;
 
 	}
 

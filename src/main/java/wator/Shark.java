@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
@@ -26,6 +28,9 @@ public class Shark extends Fish {
 		super(coordonnees, environnement, new Color(30, 35, 38));
 		setTimeToEat(3);
 		setTimeToReproduce(5);
+		image = "res/images/shark.png";
+		setAffichage();
+
 	}
 
 	/**

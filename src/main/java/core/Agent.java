@@ -1,7 +1,9 @@
 package core;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
@@ -22,6 +24,8 @@ public abstract class Agent {
 
 	protected JComponent monAffichage;
 
+	protected String image;
+
 	/**
 	 * Construtor
 	 * 
@@ -35,12 +39,17 @@ public abstract class Agent {
 		this.coordonnees = coordonnees;
 		this.color = color;
 		isDead = false;
-		setAffichage();
 	}
 
-	private void setAffichage() {
-		monAffichage = new JLabel();
-		monAffichage.setBackground(color);
+	protected void setAffichage() {
+		if (!image.equals("")) {
+			monAffichage = new JLabel(new ImageIcon(image));
+			monAffichage.setPreferredSize(new Dimension(24, 24));
+		} else {
+			monAffichage = new JLabel();
+			monAffichage.setBackground(color);
+		}
+		monAffichage.setMinimumSize(new Dimension(24, 24));
 		monAffichage.setOpaque(true);
 		monAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));
 	}
