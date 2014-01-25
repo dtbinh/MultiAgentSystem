@@ -89,7 +89,7 @@ public class Shark extends Agent {
 			if (canReproduce()) {
 				birth();
 			} else {
-				die();
+				emptyCurrentCase();
 			}
 
 			caseContenantLaProie.setAgent(this);
@@ -100,7 +100,7 @@ public class Shark extends Agent {
 			if (canReproduce()) {
 				birth();
 			} else {
-				die();
+				emptyCurrentCase();
 			}
 
 			Collections.shuffle(casesVoisinesLibres);
