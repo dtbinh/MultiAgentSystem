@@ -1,15 +1,15 @@
 package wator;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import core.Agent;
+import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
-public class Tuna extends Agent {
-
-	protected int TIME_TO_REPRODUCE;
-	protected int leftTimeToReproduce;
+public class Tuna extends Fish {
 
 	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
 		super(coordonnees, environnement, Color.green);
@@ -18,15 +18,51 @@ public class Tuna extends Agent {
 
 	@Override
 	public void action() {
-		if (isDead) {
+
+		if (aDejaJoue) {
 			return;
 		}
 
+		aDejaJoue = true;
+
 		vieillis();
+
+		final List<Case> casesVoisinesLibres = new ArrayList<Case>();
 
 		for (final Coordonnees voisin : environnement
 				.getCoordonneesVoisines(coordonnees)) {
+			final Case caseVoisine = environnement.getGrille()[voisin.getX()][voisin
+					.getY()];
 
+			if (caseVoisine.isVide()) {
+				casesVoisinesLibres.add(caseVoisine);
+			}
+		}
+
+		makeAction(casesVoisinesLibres);
+	}
+
+	/**
+	 * Réalise les actions du thon.
+	 * 
+	 * @param casesVoisinesLibres
+	 */
+	private void makeAction(final List<Case> casesVoisinesLibres) {
+
+		if (canMove(casesVoisinesLibres)) {
+
+			if (canReproduce()) {
+				birth(new Tuna(coordonnees, environnement));
+			} else {
+				emptyCurrentCase();
+			}
+
+			Collections.shuffle(casesVoisinesLibres);
+			final Case caseLibre = casesVoisinesLibres.get(0);
+			// MAJ des coordonnées du thon
+			setCoordonnees(caseLibre.getCoordonnees());
+			// Et déplacement de celui-ci dans sa nouvelle case.
+			caseLibre.setAgent(this);
 		}
 	}
 
@@ -38,20 +74,4 @@ public class Tuna extends Agent {
 		leftTimeToReproduce--;
 	}
 
-	/**
-	 * @return
-	 */
-	private boolean canReproduce() {
-		return leftTimeToReproduce <= 0;
-	}
-
-	/**
-	 * Setter
-	 * 
-	 * @param time
-	 */
-	public void setTimeToReproduce(final int time) {
-		TIME_TO_REPRODUCE = time;
-		leftTimeToReproduce = TIME_TO_REPRODUCE;
-	}
 }

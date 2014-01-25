@@ -35,8 +35,22 @@ public abstract class Agent {
 	}
 
 	/**
-	 * Méthode d'action
+	 * Méthode anstraite d'action
 	 */
 	public abstract void action();
+
+	/**
+	 * Vide la case courante de l'agent qu'elle contient.
+	 */
+	protected void emptyCurrentCase() {
+		getCurrentCase().setAgent(null);
+	}
+
+	/**
+	 * @return
+	 */
+	protected Case getCurrentCase() {
+		return environnement.getGrille()[coordonnees.getX()][coordonnees.getY()];
+	}
 
 }

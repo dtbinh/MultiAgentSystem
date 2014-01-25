@@ -6,19 +6,16 @@ import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
-import core.Agent;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
 @Data
-public class Shark extends Agent {
+public class Shark extends Fish {
 
 	private int TIME_TO_EAT;
-	private int TIME_TO_REPRODUCE;
 
 	private int leftTimeToEat;
-	private int leftTimeToReproduce;
 
 	/**
 	 * Constructor
@@ -84,7 +81,7 @@ public class Shark extends Agent {
 		if (canEat(casesContenantVoisinsMangeables)) {
 
 			if (canReproduce()) {
-				birth();
+				birth(new Shark(coordonnees, environnement));
 			} else {
 				emptyCurrentCase();
 			}
@@ -103,7 +100,7 @@ public class Shark extends Agent {
 		if (canMove(casesVoisinesLibres)) {
 
 			if (canReproduce()) {
-				birth();
+				birth(new Shark(coordonnees, environnement));
 			} else {
 				emptyCurrentCase();
 			}
@@ -114,10 +111,7 @@ public class Shark extends Agent {
 			setCoordonnees(caseLibre.getCoordonnees());
 			// Et déplacement de celui-ci dans sa nouvelle case.
 			caseLibre.setAgent(this);
-
-			return;
 		}
-
 	}
 
 	/**
@@ -128,26 +122,11 @@ public class Shark extends Agent {
 	}
 
 	/**
-	 * 
-	 */
-	private void birth() {
-		getCurrentCase().setAgent(new Shark(coordonnees, environnement));
-	}
-
-	/**
 	 * @param casesContenantVoisinsMangeables
 	 * @return
 	 */
 	private boolean canEat(final List<Case> casesContenantVoisinsMangeables) {
 		return !casesContenantVoisinsMangeables.isEmpty();
-	}
-
-	/**
-	 * @param casesVoisinesLibres
-	 * @return
-	 */
-	private boolean canMove(final List<Case> casesVoisinesLibres) {
-		return !casesVoisinesLibres.isEmpty();
 	}
 
 	/**
@@ -164,37 +143,6 @@ public class Shark extends Agent {
 	 */
 	private boolean isStarved() {
 		return leftTimeToEat == 0;
-	}
-
-	/**
-	 * @return
-	 */
-	private boolean canReproduce() {
-		return leftTimeToReproduce == 0;
-	}
-
-	/**
-	 * Vide la case courante de l'agent qu'elle contient.
-	 */
-	private void emptyCurrentCase() {
-		getCurrentCase().setAgent(null);
-	}
-
-	/**
-	 * @return
-	 */
-	private Case getCurrentCase() {
-		return environnement.getGrille()[coordonnees.getX()][coordonnees.getY()];
-	}
-
-	/**
-	 * Setter
-	 * 
-	 * @param time
-	 */
-	public void setTimeToReproduce(final int time) {
-		TIME_TO_REPRODUCE = time;
-		leftTimeToReproduce = TIME_TO_REPRODUCE;
 	}
 
 	/**
