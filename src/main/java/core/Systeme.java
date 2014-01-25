@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
+import lombok.Data;
+
+@Data
 public class Systeme extends Observable {
 
 	protected Environnement environnement;
@@ -95,23 +98,6 @@ public class Systeme extends Observable {
 		} catch (final InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void setWaitingTime(long tempsAttenteAffichage) {
-		waitingTime = tempsAttenteAffichage;
-	}
-
-	public void setSpeed(long pourcentageAffichage) {
-		speed = pourcentageAffichage;
-
-	}
-
-	public void setStatistique(Statistique instance) {
-		statistique = instance;
-	}
-
-	public Statistique getStats() {
-		return statistique;
 	}
 
 }

@@ -7,13 +7,16 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 
+import lombok.Data;
+
+@Data
 public class Case {
 
-	private Coordonnees coordonnees;
+	private final Coordonnees coordonnees;
 
 	private Agent agent;
 
-	private JComponent defaultAffichage;
+	private final JComponent defaultAffichage;
 
 	private boolean hasChanged;
 
@@ -36,7 +39,6 @@ public class Case {
 	}
 
 	public boolean hasChanged() {
-
 		return hasChanged;
 	}
 
@@ -62,18 +64,9 @@ public class Case {
 		return isVide() ? defaultAffichage : agent.print();
 	}
 
-	public Agent getAgent() {
-		return agent;
-	}
-
-	public void setAgent(Agent agent) {
+	public void setAgent(final Agent agent) {
 		this.agent = agent;
 		hasChanged = true;
-
-	}
-
-	public Coordonnees getCoordonnees() {
-		return coordonnees;
 	}
 
 }

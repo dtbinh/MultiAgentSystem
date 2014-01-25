@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -47,13 +46,12 @@ public class Vue extends JFrame implements Observer {
 	}
 
 	private void initGridPane() {
-		GridBagLayout gbl = new GridBagLayout();
+		final GridBagLayout gbl = new GridBagLayout();
 		grid = new JPanel(gbl);
 	}
 
-	@Override
 	public void update(final Observable o, final Object arg) {
-		GridBagConstraints gbc = new GridBagConstraints();
+		final GridBagConstraints gbc = new GridBagConstraints();
 		grid.removeAll();
 		final int tx = environnement.getTailleX();
 		final int ty = environnement.getTailleY();
@@ -67,8 +65,8 @@ public class Vue extends JFrame implements Observer {
 				}
 			}
 		}
-		environnement.getSysteme().getStats().update();
-		environnement.getSysteme().getStats().printLineToFile();
+		environnement.getSysteme().getStatistique().update();
+		environnement.getSysteme().getStatistique().printLineToFile();
 		grid.validate();
 		grid.repaint();
 	}

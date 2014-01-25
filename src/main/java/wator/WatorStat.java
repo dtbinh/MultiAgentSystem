@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import lombok.Data;
+
 import org.apache.commons.io.FileUtils;
 
 import core.Agent;
 import core.Environnement;
 import core.Statistique;
 
+@Data
 public class WatorStat implements Statistique {
 
 	private static Statistique INSTANCE = new WatorStat();
@@ -29,12 +32,6 @@ public class WatorStat implements Statistique {
 		return INSTANCE;
 	}
 
-	@Override
-	public void setEnvironnement(final Environnement environnement) {
-		this.environnement = environnement;
-	}
-
-	@Override
 	public void printLineToFile() {
 		try {
 			line = nbShark + ";" + nbTuna;
@@ -44,7 +41,6 @@ public class WatorStat implements Statistique {
 		}
 	}
 
-	@Override
 	public void update() {
 		nbTuna = 0;
 		nbShark = 0;
@@ -64,7 +60,6 @@ public class WatorStat implements Statistique {
 		}
 	}
 
-	@Override
 	public void printEntete() {
 		try {
 			FileUtils.write(file, line + "\n", true);
@@ -73,7 +68,6 @@ public class WatorStat implements Statistique {
 		}
 	}
 
-	@Override
 	public void setFile(final String fileName) {
 		try {
 			Files.deleteIfExists(Paths.get(fileName));

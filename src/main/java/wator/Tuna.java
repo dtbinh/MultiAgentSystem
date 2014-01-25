@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.Data;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
+@Data
 public class Tuna extends Fish {
 
 	/**
@@ -19,12 +21,6 @@ public class Tuna extends Fish {
 	 */
 	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
 		super(coordonnees, environnement, Color.MAGENTA);
-<<<<<<< HEAD
-=======
-		setTimeToReproduce(2);
-		image = "res/images/tuna.png";
-		setAffichage();
->>>>>>> origin/master
 	}
 
 	/**

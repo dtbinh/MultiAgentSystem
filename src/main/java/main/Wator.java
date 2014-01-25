@@ -11,19 +11,19 @@ public class Wator {
 
 	public static void main(final String[] args) throws InterruptedException {
 
-		final int tailleEnv = 75;
+		final int tailleEnv = 25;
 		final int tailleVue = 600;
 
-		final int timeToBeStarved = -10000;
+		final int timeToBeStarved = 7;
 
-		final int reproductionShark = 10000;
-		final int reproductionTuna = 5;
+		final int reproductionShark = 10;
+		final int reproductionTuna = 3;
 
-		final int initialNumberOfShark = 1;
-		final int initialNumberOfTuna = 0;
+		final int initialNumberOfShark = 10;
+		final int initialNumberOfTuna = 50;
 
 		final long pourcentageAffichage = 10;
-		final long tempsAttenteAffichage = 500;
+		final long tempsAttenteAffichage = 5000;
 
 		final Environnement ocean = new Ocean(tailleEnv, initialNumberOfShark,
 				initialNumberOfTuna, timeToBeStarved, reproductionShark,
