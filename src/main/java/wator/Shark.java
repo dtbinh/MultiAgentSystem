@@ -2,6 +2,7 @@ package wator;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
@@ -42,6 +43,8 @@ public class Shark extends Agent {
 	@Override
 	public void action() {
 
+		aDejaJoue = true;
+
 		if (isStarved()) {
 			// TODO JIV : ajouter le méthode le faisant mourrir
 			return;
@@ -49,13 +52,94 @@ public class Shark extends Agent {
 
 		vieillis();
 
-		final List<Case> voisinsMangeables = new ArrayList<Case>();
+		final List<Case> casesContenantVoisinsMangeables = new ArrayList<Case>();
+		final List<Case> casesVoisinesLibres = new ArrayList<Case>();
 
 		for (final Coordonnees voisin : environnement
 				.getCoordonneesVoisines(coordonnees)) {
+			final Case caseVoisine = environnement.getGrille()[voisin.getX()][voisin
+					.getY()];
 
+			if (caseVoisine.isVide()) {
+				casesVoisinesLibres.add(caseVoisine);
+			} else if (caseVoisine.getAgent() instanceof Tuna) {
+				casesContenantVoisinsMangeables.add(caseVoisine);
+			}
 		}
 
+		makeAction(casesContenantVoisinsMangeables, casesVoisinesLibres);
+	}
+
+	/**
+	 * Réalise les actions du requins.
+	 * 
+	 * @param casesContenantVoisinsMangeables
+	 * @param casesVoisinesLibres
+	 */
+	private void makeAction(final List<Case> casesContenantVoisinsMangeables,
+			final List<Case> casesVoisinesLibres) {
+
+		if (canEat(casesContenantVoisinsMangeables)) {
+			Collections.shuffle(casesVoisinesLibres);
+
+			final Case caseContenantLaProie = casesContenantVoisinsMangeables
+					.get(0);
+			eat(caseContenantLaProie);
+
+			if (canReproduce()) {
+				birth();
+			} else {
+				emptyCurrentCase();
+			}
+
+			caseContenantLaProie.setAgent(this);
+			return;
+		}
+
+		if (canMove(casesVoisinesLibres)) {
+			if (canReproduce()) {
+				birth();
+			} else {
+				emptyCurrentCase();
+			}
+
+			Collections.shuffle(casesVoisinesLibres);
+			casesVoisinesLibres.get(0).setAgent(this);
+			return;
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+	private void birth() {
+		getCurrentCase().setAgent(new Shark(coordonnees, environnement));
+	}
+
+	/**
+	 * Réalise l'action de manger une proie.
+	 * 
+	 * @param caseContenantLaProie
+	 */
+	private void eat(final Case caseContenantLaProie) {
+		caseContenantLaProie.setAgent(this);
+	}
+
+	/**
+	 * @param casesContenantVoisinsMangeables
+	 * @return
+	 */
+	private boolean canEat(final List<Case> casesContenantVoisinsMangeables) {
+		return !casesContenantVoisinsMangeables.isEmpty();
+	}
+
+	/**
+	 * @param casesVoisinesLibres
+	 * @return
+	 */
+	private boolean canMove(final List<Case> casesVoisinesLibres) {
+		return !casesVoisinesLibres.isEmpty();
 	}
 
 	/**
@@ -79,6 +163,20 @@ public class Shark extends Agent {
 	 */
 	private boolean canReproduce() {
 		return leftTimeToReproduce == 0;
+	}
+
+	/**
+	 * Vide la case courante de l'agent qu'elle contient.
+	 */
+	private void emptyCurrentCase() {
+		getCurrentCase().setAgent(null);
+	}
+
+	/**
+	 * @return
+	 */
+	private Case getCurrentCase() {
+		return environnement.getGrille()[coordonnees.getX()][coordonnees.getY()];
 	}
 
 	/**

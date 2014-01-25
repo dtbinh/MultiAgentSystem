@@ -84,8 +84,7 @@ public class Ocean implements Environnement {
 	private void remplirGrilleAvecCasesVides() {
 		for (int x = 0; x < tailleX; x++) {
 			for (int y = 0; y < tailleY; y++) {
-				final Coordonnees coordonnees = new Coordonnees(tailleX,
-						tailleY);
+				final Coordonnees coordonnees = new Coordonnees(x, y);
 				grille[x][y] = new Case();
 				coordonneesDeLaGrille.add(coordonnees);
 			}
