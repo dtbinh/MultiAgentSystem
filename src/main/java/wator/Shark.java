@@ -46,7 +46,7 @@ public class Shark extends Agent {
 		aDejaJoue = true;
 
 		if (isStarved()) {
-			// TODO JIV : ajouter le méthode le faisant mourrir
+			die();
 			return;
 		}
 
@@ -89,7 +89,7 @@ public class Shark extends Agent {
 			if (canReproduce()) {
 				birth();
 			} else {
-				emptyCurrentCase();
+				die();
 			}
 
 			caseContenantLaProie.setAgent(this);
@@ -100,7 +100,7 @@ public class Shark extends Agent {
 			if (canReproduce()) {
 				birth();
 			} else {
-				emptyCurrentCase();
+				die();
 			}
 
 			Collections.shuffle(casesVoisinesLibres);
@@ -108,6 +108,13 @@ public class Shark extends Agent {
 			return;
 		}
 
+	}
+
+	/**
+	 * Simule la mort du requin
+	 */
+	private void die() {
+		emptyCurrentCase();
 	}
 
 	/**
