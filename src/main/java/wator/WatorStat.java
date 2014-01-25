@@ -1,0 +1,79 @@
+package wator;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+
+import core.Agent;
+import core.Environnement;
+import core.Statistique;
+
+public class WatorStat implements Statistique {
+
+	private static Statistique INSTANCE = new WatorStat();
+	private Environnement environnement;
+	private int nbShark;
+	private int nbTuna;
+	private File file;
+	private String line;
+
+	private WatorStat() {
+		nbShark = 0;
+		nbTuna = 0;
+		line = nbShark + ";" + nbTuna;
+		setEntete();
+	}
+
+	public static Statistique getInstance() {
+		return INSTANCE;
+	}
+
+	@Override
+	public void setEnvironnement(Environnement environnement) {
+		this.environnement = environnement;
+	}
+
+	@Override
+	public void printLineToFile() {
+		try {
+			FileUtils.write(file, line + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void update() {
+		nbTuna = 0;
+		nbShark = 0;
+		for (int x = 0; x < environnement.getTailleX(); x++) {
+			for (int y = 0; y < environnement.getTailleY(); y++) {
+				Agent agent = environnement.getCaseFromCoordonnees(x, y)
+						.getAgent();
+				if (agent instanceof Tuna) {
+					nbTuna++;
+					continue;
+				}
+				if (agent instanceof Shark) {
+					nbShark++;
+					continue;
+				}
+			}
+		}
+	}
+
+	private void setEntete() {
+		try {
+			FileUtils.write(file, line + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void setFile(String fileName) {
+		file = new File(fileName);
+	}
+
+}

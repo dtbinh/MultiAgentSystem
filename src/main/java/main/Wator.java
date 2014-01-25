@@ -1,7 +1,9 @@
 package main;
 
 import wator.Ocean;
+import wator.WatorStat;
 import core.Environnement;
+import core.Statistique;
 import core.Systeme;
 import core.Vue;
 
@@ -28,6 +30,12 @@ public class Wator {
 				reproductionTuna);
 		final Vue vue = new Vue(ocean, tailleVue, tailleVue);
 		final Systeme systeme = new Systeme(vue, ocean);
+
+		Statistique stat = WatorStat.getInstance();
+		stat.setEnvironnement(ocean);
+		stat.setFile("WatorStat.csv");
+
+		systeme.setStatistique(stat);
 		systeme.setWaitingTime(tempsAttenteAffichage);
 		systeme.setSpeed(pourcentageAffichage);
 		ocean.setSysteme(systeme);
