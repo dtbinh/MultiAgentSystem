@@ -12,7 +12,7 @@ import core.Environnement;
 public class Tuna extends Fish {
 
 	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
-		super(coordonnees, environnement, new Color(255, 204, 153));
+		super(coordonnees, environnement, Color.MAGENTA);
 		setTimeToReproduce(2);
 	}
 
