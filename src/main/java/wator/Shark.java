@@ -6,11 +6,15 @@ import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Shark extends Fish {
 
 	private int TIME_TO_EAT;
@@ -94,8 +98,8 @@ public class Shark extends Fish {
 		if (canEat(casesContenantVoisinsMangeables)) {
 
 			if (canReproduce()) {
-				birth(new Shark(coordonnees, environnement));
-				leftTimeToReproduce = TIME_TO_REPRODUCE;
+				birth(new Shark(coordonnees, environnement, TIME_TO_EAT,
+						TIME_TO_REPRODUCE));
 			} else {
 				emptyCurrentCase();
 			}
@@ -116,11 +120,8 @@ public class Shark extends Fish {
 		if (canMove(casesVoisinesLibres)) {
 
 			if (canReproduce()) {
-				final Shark babyShark = new Shark(coordonnees, environnement);
-				babyShark.setTimeToEat(TIME_TO_EAT);
-				babyShark.setTimeToReproduce(TIME_TO_REPRODUCE);
-				birth(babyShark);
-				leftTimeToReproduce = TIME_TO_REPRODUCE;
+				birth(new Shark(coordonnees, environnement, TIME_TO_EAT,
+						TIME_TO_REPRODUCE));
 			} else {
 				emptyCurrentCase();
 			}

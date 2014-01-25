@@ -6,11 +6,15 @@ import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Tuna extends Fish {
 
 	/**
@@ -69,10 +73,7 @@ public class Tuna extends Fish {
 		if (canMove(casesVoisinesLibres)) {
 
 			if (canReproduce()) {
-				final Tuna babyTuna = new Tuna(coordonnees, environnement);
-				babyTuna.setTimeToReproduce(TIME_TO_REPRODUCE);
-				birth(babyTuna);
-				leftTimeToReproduce = TIME_TO_REPRODUCE;
+				birth(new Tuna(coordonnees, environnement, TIME_TO_REPRODUCE));
 			} else {
 				emptyCurrentCase();
 			}
