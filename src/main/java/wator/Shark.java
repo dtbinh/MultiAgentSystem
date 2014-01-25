@@ -11,7 +11,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 
-import lombok.Data;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;

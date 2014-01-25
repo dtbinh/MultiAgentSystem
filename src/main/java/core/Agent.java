@@ -7,8 +7,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 
-import lombok.Data;
-
 public abstract class Agent {
 
 	protected Environnement environnement;

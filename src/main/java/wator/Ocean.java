@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import lombok.Data;
 import core.Agent;
 import core.Case;
 import core.Coordonnees;
