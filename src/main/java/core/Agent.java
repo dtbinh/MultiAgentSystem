@@ -17,6 +17,8 @@ public abstract class Agent {
 
 	protected Color color;
 
+	protected boolean aDejaJoue = false;
+
 	/**
 	 * Construtor
 	 * 

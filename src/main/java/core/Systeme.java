@@ -39,6 +39,9 @@ public class Systeme extends Observable {
 	public void runOneTurn() {
 		slowExecution();
 
+		// Je remets à false le fait que les agents aient jouer à ce tour.
+		resetADejaJouerBooleanOfAllAgents();
+
 		final List<Coordonnees> coordonnéesDeLaGrille = environnement
 				.getCoordonneesDeLaGrille();
 
@@ -51,6 +54,20 @@ public class Systeme extends Observable {
 
 			if (case0.isNotVide()) {
 				case0.getAgent().action();
+			}
+		}
+	}
+
+	/**
+	 * Remets à "false" le boolean de tous les agents.
+	 */
+	private void resetADejaJouerBooleanOfAllAgents() {
+		for (final Coordonnees coordonnees : environnement
+				.getCoordonneesDeLaGrille()) {
+			final Case caseParcouru = environnement.getGrille()[coordonnees
+					.getX()][coordonnees.getY()];
+			if (caseParcouru.isNotVide()) {
+				caseParcouru.getAgent().setADejaJoue(false);
 			}
 		}
 	}

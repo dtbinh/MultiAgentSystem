@@ -14,8 +14,6 @@ import core.Environnement;
 @Data
 public class Shark extends Agent {
 
-	private boolean aDejaJoue = false;
-
 	private int TIME_TO_EAT;
 	private int TIME_TO_REPRODUCE;
 
@@ -42,6 +40,10 @@ public class Shark extends Agent {
 	 */
 	@Override
 	public void action() {
+
+		if (aDejaJoue) {
+			return;
+		}
 
 		aDejaJoue = true;
 
