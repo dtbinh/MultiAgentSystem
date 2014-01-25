@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
+import lombok.Data;
 import core.Case;
 import core.Coordonnees;
 import core.Environnement;
 
+@Data
 public class Shark extends Fish {
 
 	private int TIME_TO_EAT;
@@ -26,9 +26,6 @@ public class Shark extends Fish {
 	public Shark(final Coordonnees coordonnees,
 			final Environnement environnement) {
 		super(coordonnees, environnement, new Color(30, 35, 38));
-		setTimeToEat(3);
-		setTimeToReproduce(5);
-
 	}
 
 	/**

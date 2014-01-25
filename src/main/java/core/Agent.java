@@ -8,6 +8,9 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 
+import lombok.Data;
+
+@Data
 public abstract class Agent {
 
 	protected Environnement environnement;
@@ -66,20 +69,8 @@ public abstract class Agent {
 		return environnement.getCaseFromCoordonnees(coordonnees);
 	}
 
-	protected void setCoordonnees(Coordonnees coordonnees) {
-		this.coordonnees = coordonnees;
-	}
-
-	public void setADejaJoue(boolean b) {
-		aDejaJoue = b;
-
-	}
-
 	public JComponent print() {
 		return monAffichage;
 	}
 
-	public Coordonnees getCoordonnees() {
-		return coordonnees;
-	}
 }

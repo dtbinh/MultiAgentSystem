@@ -11,17 +11,17 @@ public class Wator {
 
 	public static void main(final String[] args) throws InterruptedException {
 
-		final int tailleEnv = 75;
+		final int tailleEnv = 25;
 		final int tailleVue = 600;
 		final int tailleCase = 5;
 
 		final int timeToBeStarved = 7;
 
 		final int reproductionShark = 10;
-		final int reproductionTuna = 5;
+		final int reproductionTuna = 3;
 
-		final int initialNumberOfShark = 100;
-		final int initialNumberOfTuna = 300;
+		final int initialNumberOfShark = 10;
+		final int initialNumberOfTuna = 50;
 
 		final long pourcentageAffichage = 10;
 		final long tempsAttenteAffichage = 500;
@@ -42,5 +42,6 @@ public class Wator {
 		ocean.setSysteme(systeme);
 		vue.setVisible(true);
 		systeme.run();
+
 	}
 }
