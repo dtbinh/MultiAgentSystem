@@ -64,8 +64,6 @@ public abstract class Agent {
 	 * @return
 	 */
 	protected Case getCurrentCase() {
-		// return
-		// environnement.getGrille()[coordonnees.getX()][coordonnees.getY()];
 		return environnement.getCaseFromCoordonnees(coordonnees);
 	}
 

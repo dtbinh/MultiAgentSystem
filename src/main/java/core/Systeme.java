@@ -63,9 +63,6 @@ public class Systeme extends Observable {
 
 		for (final Coordonnees coordonnees : coordonnéesDeLaGrille) {
 
-			// final Case currentCase =
-			// environnement.getGrille()[coordonnees.getX()][coordonnees
-			// .getY()];
 			final Case currentCase = environnement
 					.getCaseFromCoordonnees(coordonnees);
 			if (currentCase.isNotVide()) {
@@ -82,8 +79,6 @@ public class Systeme extends Observable {
 	private void resetADejaJouerBooleanOfAllAgents() {
 		for (final Coordonnees coordonnees : environnement
 				.getCoordonneesDeLaGrille()) {
-			// final Case caseParcouru = environnement.getGrille()[coordonnees
-			// .getX()][coordonnees.getY()];
 			final Case caseParcouru = environnement
 					.getCaseFromCoordonnees(coordonnees);
 			if (caseParcouru.isNotVide()) {

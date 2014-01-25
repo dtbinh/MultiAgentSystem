@@ -60,9 +60,13 @@ public class Ocean implements Environnement {
 	 * Constructor
 	 * 
 	 * @param taille
+	 * @param reproductionTuna
+	 * @param reproductionShark
+	 * @param timeToBeStarved
 	 */
 	public Ocean(final int taille, final int initialNumberOfShark,
-			final int initialNumberOfTuna) {
+			final int initialNumberOfTuna, int timeToBeStarved,
+			int reproductionShark, int reproductionTuna) {
 		this(taille, taille, initialNumberOfShark, initialNumberOfTuna, true);
 	}
 

@@ -18,7 +18,7 @@ public class Tuna extends Fish {
 
 	public Tuna(final Coordonnees coordonnees, final Environnement environnement) {
 		super(coordonnees, environnement, new Color(255, 204, 153));
-		setTimeToReproduce(4);
+		setTimeToReproduce(2);
 	}
 
 	@Override
@@ -36,9 +36,6 @@ public class Tuna extends Fish {
 
 		for (final Coordonnees voisin : environnement
 				.getCoordonneesVoisines(coordonnees)) {
-			// final Case caseVoisine =
-			// environnement.getGrille()[voisin.getX()][voisin
-			// .getY()];
 			final Case caseVoisine = environnement
 					.getCaseFromCoordonnees(voisin);
 			if (caseVoisine.isVide()) {
@@ -60,6 +57,7 @@ public class Tuna extends Fish {
 
 			if (canReproduce()) {
 				birth(new Tuna(coordonnees, environnement));
+				leftTimeToReproduce = TIME_TO_REPRODUCE;
 			} else {
 				emptyCurrentCase();
 			}
@@ -79,6 +77,9 @@ public class Tuna extends Fish {
 	private void vieillis() {
 		age++;
 		leftTimeToReproduce--;
+		if (leftTimeToReproduce < 0) {
+			leftTimeToReproduce = 0;
+		}
 	}
 
 }

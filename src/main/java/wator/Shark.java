@@ -31,7 +31,7 @@ public class Shark extends Fish {
 	public Shark(final Coordonnees coordonnees,
 			final Environnement environnement) {
 		super(coordonnees, environnement, new Color(30, 35, 38));
-		setTimeToEat(5);
+		setTimeToEat(4);
 		setTimeToReproduce(7);
 	}
 
@@ -61,9 +61,6 @@ public class Shark extends Fish {
 
 		for (final Coordonnees voisin : environnement
 				.getCoordonneesVoisines(coordonnees)) {
-			// final Case caseVoisine =
-			// environnement.getGrille()[voisin.getX()][voisin
-			// .getY()];
 			final Case caseVoisine = environnement
 					.getCaseFromCoordonnees(voisin);
 			if (caseVoisine.isVide()) {
@@ -89,6 +86,7 @@ public class Shark extends Fish {
 
 			if (canReproduce()) {
 				birth(new Shark(coordonnees, environnement));
+				leftTimeToReproduce = TIME_TO_REPRODUCE;
 			} else {
 				emptyCurrentCase();
 			}
@@ -96,10 +94,12 @@ public class Shark extends Fish {
 			Collections.shuffle(casesContenantVoisinsMangeables);
 			final Case caseContenantVoisinMangeable = casesContenantVoisinsMangeables
 					.get(0);
-			// Et déplacement de celui-ci dans sa nouvelle case.
-			caseContenantVoisinMangeable.setAgent(this);
 			// MAJ des coordonnées du requin
 			setCoordonnees(caseContenantVoisinMangeable.getCoordonnees());
+			// Et déplacement de celui-ci dans sa nouvelle case.
+			caseContenantVoisinMangeable.setAgent(this);
+			// et on remet son temps pour manger a TIME TO EAT
+			leftTimeToEat = TIME_TO_EAT;
 
 			return;
 		}
@@ -108,6 +108,7 @@ public class Shark extends Fish {
 
 			if (canReproduce()) {
 				birth(new Shark(coordonnees, environnement));
+				leftTimeToReproduce = TIME_TO_REPRODUCE;
 			} else {
 				emptyCurrentCase();
 			}
@@ -142,7 +143,13 @@ public class Shark extends Fish {
 	private void vieillis() {
 		age++;
 		leftTimeToEat--;
+		if (leftTimeToEat < 0) {
+			leftTimeToEat = 0;
+		}
 		leftTimeToReproduce--;
+		if (leftTimeToReproduce < 0) {
+			leftTimeToReproduce = 0;
+		}
 	}
 
 	/**
