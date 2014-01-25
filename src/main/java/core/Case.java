@@ -55,6 +55,7 @@ public class Case {
 
 	public void setAgent(Agent agent) {
 		this.agent = agent;
+
 	}
 
 	public Coordonnees getCoordonnees() {

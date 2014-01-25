@@ -42,7 +42,8 @@ public class Vue extends JFrame implements Observer {
 		int ty = environnement.getTailleY();
 		for (int x = 0; x < tx; x++) {
 			for (int y = 0; y < ty; y++) {
-				grid.add(environnement.getCaseFromCoordonnees(x, y).printCase());
+				Case c = environnement.getCaseFromCoordonnees(x, y);
+				grid.add(c.printCase());
 			}
 		}
 
