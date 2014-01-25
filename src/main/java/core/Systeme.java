@@ -11,6 +11,7 @@ public class Systeme extends Observable {
 
 	protected Long waitingTime = 50L;
 	protected Long speed = 100L;
+	protected Statistique statistique;
 
 	/**
 	 * Constructor
@@ -103,6 +104,14 @@ public class Systeme extends Observable {
 	public void setSpeed(long pourcentageAffichage) {
 		speed = pourcentageAffichage;
 
+	}
+
+	public void setStatistique(Statistique instance) {
+		statistique = instance;
+	}
+
+	public Statistique getStats() {
+		return statistique;
 	}
 
 }

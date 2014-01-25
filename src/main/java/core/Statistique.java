@@ -2,10 +2,14 @@ package core;
 
 public interface Statistique {
 
-	void printLine(String line);
-
-	void setEntete(String line);
+	void printLineToFile();
 
 	void setFile(String fileName);
+
+	void setEnvironnement(Environnement environnement);
+
+	void update();
+
+	void printEntete();
 
 }

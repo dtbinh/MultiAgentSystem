@@ -17,11 +17,12 @@ public class Vue extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
 	protected Environnement environnement;
 	private JPanel grid;
-	private int sizeX;
-	private int sizeY;
+	private final int sizeX;
+	private final int sizeY;
 
 	// TODO mettre le jscrollpane
-	public Vue(Environnement environnement, int sizeX, int sizeY) {
+	public Vue(final Environnement environnement, final int sizeX,
+			final int sizeY) {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.environnement = environnement;
@@ -40,17 +41,18 @@ public class Vue extends JFrame implements Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(final Observable o, final Object arg) {
 		grid.removeAll();
-		int tx = environnement.getTailleX();
-		int ty = environnement.getTailleY();
+		final int tx = environnement.getTailleX();
+		final int ty = environnement.getTailleY();
 		for (int x = 0; x < tx; x++) {
 			for (int y = 0; y < ty; y++) {
-				Case c = environnement.getCaseFromCoordonnees(x, y);
+				final Case c = environnement.getCaseFromCoordonnees(x, y);
 				grid.add(c.printCase());
 			}
 		}
-
+		environnement.getSysteme().getStats().update();
+		environnement.getSysteme().getStats().printLineToFile();
 		grid.validate();
 		grid.repaint();
 	}
