@@ -11,7 +11,7 @@ public class Wator {
 
 	public static void main(final String[] args) throws InterruptedException {
 
-		final int tailleEnv = 75;
+		final int tailleEnv = 100;
 
 		final int tailleVue = 600;
 		final int tailleCase = 5;

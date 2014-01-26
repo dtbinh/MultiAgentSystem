@@ -64,9 +64,7 @@ public class Systeme extends Observable {
 
 		final List<Coordonnees> coordonnéesDeLaGrille = environnement
 				.getCoordonneesDeLaGrille();
-
 		Collections.shuffle(coordonnéesDeLaGrille);
-
 		for (final Coordonnees coordonnees : coordonnéesDeLaGrille) {
 
 			final Case currentCase = environnement
@@ -74,10 +72,10 @@ public class Systeme extends Observable {
 			if (currentCase.isNotVide()) {
 				currentCase.getAgent().action();
 			}
-		}
 
+		}
 		setChanged();
-		this.notifyObservers();
+		notifyObservers();
 	}
 
 	/**

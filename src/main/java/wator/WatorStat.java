@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 
 import lombok.Data;
 
@@ -20,6 +21,8 @@ public class WatorStat implements Statistique {
 	private Environnement environnement;
 	private int nbShark;
 	private int nbTuna;
+	private Map<Integer, Integer> ageShark;
+	private Map<Integer, Integer> ageTuna;
 	private File file;
 	private String line;
 
@@ -32,6 +35,7 @@ public class WatorStat implements Statistique {
 		return INSTANCE;
 	}
 
+	@Override
 	public void printLineToFile() {
 		try {
 			line = nbShark + ";" + nbTuna;
@@ -41,11 +45,14 @@ public class WatorStat implements Statistique {
 		}
 	}
 
+	@Override
 	public void update() {
 		nbTuna = 0;
 		nbShark = 0;
-		for (int x = 0; x < environnement.getTailleX(); x++) {
-			for (int y = 0; y < environnement.getTailleY(); y++) {
+		final int max = environnement.getTailleSup();
+		final int min = environnement.getTailleInf();
+		for (int x = min; x < max; x++) {
+			for (int y = min; y < max; y++) {
 				final Agent agent = environnement.getCaseFromCoordonnees(x, y)
 						.getAgent();
 				if (agent instanceof Tuna) {
@@ -60,6 +67,7 @@ public class WatorStat implements Statistique {
 		}
 	}
 
+	@Override
 	public void printEntete() {
 		try {
 			FileUtils.write(file, line + "\n", true);
@@ -68,6 +76,7 @@ public class WatorStat implements Statistique {
 		}
 	}
 
+	@Override
 	public void setFile(final String fileName) {
 		try {
 			Files.deleteIfExists(Paths.get(fileName));

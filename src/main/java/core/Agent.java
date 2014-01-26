@@ -40,6 +40,7 @@ public abstract class Agent {
 
 	protected void setAffichage() {
 		monAffichage = new JLabel();
+		// monAffichage = new Circle();
 		monAffichage.setBackground(color);
 		monAffichage.setOpaque(true);
 		monAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));

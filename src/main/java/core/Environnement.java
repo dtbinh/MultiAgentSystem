@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Environnement {
 
-	int getTailleX();
+	int getTailleSup();
 
-	int getTailleY();
+	int getTailleInf();
 
 	Case[][] getGrille();
 
@@ -18,8 +18,8 @@ public interface Environnement {
 
 	List<Coordonnees> getCoordonneesDeLaGrille();
 
-	Case getCaseFromCoordonnees(Coordonnees coordonnees);
+	Case getCaseFromCoordonnees(final Coordonnees coordonnees);
 
-	Case getCaseFromCoordonnees(int x, int y);
+	Case getCaseFromCoordonnees(final int x, final int y);
 
 }

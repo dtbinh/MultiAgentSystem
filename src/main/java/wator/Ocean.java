@@ -1,5 +1,6 @@
 package wator;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,9 +18,9 @@ public class Ocean implements Environnement {
 
 	private final Case[][] grille;
 
-	private final int tailleX;
+	private final int tailleSup;
 
-	private final int tailleY;
+	private final int tailleInf;
 
 	private final boolean isTore;
 
@@ -37,15 +38,15 @@ public class Ocean implements Environnement {
 	 * @param timeToBeStarved
 	 * @param isTore
 	 */
-	public Ocean(final int tailleX, final int tailleY,
-			final int initialNumberOfShark, final int initialNumberOfTuna,
-			final int timeToBeStarved, final int reproductionShark,
-			final int reproductionTuna, final boolean isTore) {
+	public Ocean(final int taille, final int initialNumberOfShark,
+			final int initialNumberOfTuna, final int timeToBeStarved,
+			final int reproductionShark, final int reproductionTuna,
+			final boolean isTore) {
 
-		this.tailleX = tailleX;
-		this.tailleY = tailleY;
+		tailleSup = taille;
+		tailleInf = 0;
 		this.isTore = isTore;
-		grille = new Case[tailleX][tailleY];
+		grille = new Case[taille][taille];
 
 		initGrille(initialNumberOfShark, initialNumberOfTuna, timeToBeStarved,
 				reproductionShark, reproductionTuna);
@@ -62,7 +63,7 @@ public class Ocean implements Environnement {
 	public Ocean(final int taille, final int initialNumberOfShark,
 			final int initialNumberOfTuna, final int timeToBeStarved,
 			final int reproductionShark, final int reproductionTuna) {
-		this(taille, taille, initialNumberOfShark, initialNumberOfTuna,
+		this(taille, initialNumberOfShark, initialNumberOfTuna,
 				timeToBeStarved, reproductionShark, reproductionTuna, true);
 	}
 
@@ -87,10 +88,10 @@ public class Ocean implements Environnement {
 	 * Initialise la grille
 	 */
 	private void remplirGrilleAvecCasesVides() {
-		for (int x = 0; x < tailleX; x++) {
-			for (int y = 0; y < tailleY; y++) {
+		for (int x = 0; x < tailleSup; x++) {
+			for (int y = 0; y < tailleSup; y++) {
 				final Coordonnees coordonnees = new Coordonnees(x, y);
-				grille[x][y] = new Case(coordonnees);
+				grille[x][y] = new Case(coordonnees, new Color(28, 107, 160));
 				coordonneesDeLaGrille.add(coordonnees);
 			}
 		}
@@ -124,6 +125,7 @@ public class Ocean implements Environnement {
 
 	}
 
+	@Override
 	public List<Coordonnees> getCoordonneesVoisines(
 			final Coordonnees coordonnees) {
 
@@ -134,17 +136,18 @@ public class Ocean implements Environnement {
 		final int posY = coordonnees.getY();
 
 		if (isTore) {
-			res.add(new Coordonnees(((posX - 1) + tailleX) % tailleX,
-					((posY - 1) + tailleY) % tailleY));
-			res.add(new Coordonnees(((posX - 1) + tailleX) % tailleX, posY));
-			res.add(new Coordonnees(((posX - 1) + tailleX) % tailleX,
-					(posY + 1) % tailleY));
-			res.add(new Coordonnees(posX, (posY + 1) % tailleY));
-			res.add(new Coordonnees((posX + 1) % tailleX, (posY + 1) % tailleY));
-			res.add(new Coordonnees((posX + 1) % tailleX, posY));
-			res.add(new Coordonnees((posX + 1) % tailleX,
-					((posY - 1) + tailleY) % tailleY));
-			res.add(new Coordonnees(posX, ((posY - 1) + tailleY) % tailleY));
+			res.add(new Coordonnees(((posX - 1) + tailleSup) % tailleSup,
+					((posY - 1) + tailleSup) % tailleSup));
+			res.add(new Coordonnees(((posX - 1) + tailleSup) % tailleSup, posY));
+			res.add(new Coordonnees(((posX - 1) + tailleSup) % tailleSup,
+					(posY + 1) % tailleSup));
+			res.add(new Coordonnees(posX, (posY + 1) % tailleSup));
+			res.add(new Coordonnees((posX + 1) % tailleSup, (posY + 1)
+					% tailleSup));
+			res.add(new Coordonnees((posX + 1) % tailleSup, posY));
+			res.add(new Coordonnees((posX + 1) % tailleSup,
+					((posY - 1) + tailleSup) % tailleSup));
+			res.add(new Coordonnees(posX, ((posY - 1) + tailleSup) % tailleSup));
 
 			return res;
 		}
@@ -152,10 +155,12 @@ public class Ocean implements Environnement {
 		return res;
 	}
 
+	@Override
 	public Case getCaseFromCoordonnees(final Coordonnees coordonnees) {
 		return getCaseFromCoordonnees(coordonnees.getX(), coordonnees.getY());
 	}
 
+	@Override
 	public Case getCaseFromCoordonnees(final int x, final int y) {
 		return grille[x][y];
 	}

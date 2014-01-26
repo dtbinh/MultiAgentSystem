@@ -51,23 +51,26 @@ public class Vue extends JFrame implements Observer {
 	}
 
 	private void initGridPane() {
-		final GridLayout gbl = new GridLayout(environnement.getTailleX(),
-				environnement.getTailleY());
+		final GridLayout gbl = new GridLayout(environnement.getTailleSup(),
+				environnement.getTailleSup());
 		grid = new JPanel(gbl);
 	}
 
 	@Override
 	public void update(final Observable o, final Object arg) {
 		grid.removeAll();
-		final int tx = environnement.getTailleX();
-		final int ty = environnement.getTailleY();
-		for (int x = 0; x < tx; x++) {
-			for (int y = 0; y < ty; y++) {
+		final int max = environnement.getTailleSup();
+		final int min = environnement.getTailleInf();
+
+		for (int x = min; x < max + min; x++) {
+			for (int y = min; y < max + min; y++) {
 				final Case c = environnement.getCaseFromCoordonnees(x, y);
 				final JComponent jc = c.printCase();
+
 				jc.setPreferredSize(new Dimension(cellSize * zoom, cellSize
 						* zoom));
 				grid.add(jc);
+
 			}
 		}
 		environnement.getSysteme().getStatistique().update();
