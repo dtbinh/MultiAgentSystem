@@ -26,7 +26,7 @@ public class Wator {
 		final int initialNumberOfTuna = 800;
 
 		final long pourcentageAffichage = 10;
-		final long tempsAttenteAffichage = 500;
+		final long tempsAttenteAffichage = 300;
 
 		final Environnement ocean = new Ocean(tailleEnv, initialNumberOfShark,
 				initialNumberOfTuna, timeToBeStarved, reproductionShark,

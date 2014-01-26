@@ -94,7 +94,7 @@ public class Tuna extends Fish {
 		age++;
 		leftTimeToReproduce--;
 		if (leftTimeToReproduce < 0) {
-			leftTimeToReproduce = 0;
+			leftTimeToReproduce = TIME_TO_REPRODUCE;
 		}
 	}
 

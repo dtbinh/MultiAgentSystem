@@ -24,6 +24,8 @@ public class Vue extends JFrame implements Observer {
 	private final int sizeY;
 	private final int cellSize;
 
+	private final int zoom;
+
 	// TODO mettre le jscrollpane
 	public Vue(final Environnement environnement, final int sizeX,
 			final int sizeY, final int cellSize) {
@@ -31,8 +33,8 @@ public class Vue extends JFrame implements Observer {
 		this.sizeY = sizeY;
 		this.environnement = environnement;
 		this.cellSize = cellSize;
+		zoom = 2;
 		initFrame();
-
 	}
 
 	private void initFrame() {
@@ -63,7 +65,8 @@ public class Vue extends JFrame implements Observer {
 			for (int y = 0; y < ty; y++) {
 				final Case c = environnement.getCaseFromCoordonnees(x, y);
 				final JComponent jc = c.printCase();
-				jc.setPreferredSize(new Dimension(cellSize, cellSize));
+				jc.setPreferredSize(new Dimension(cellSize * zoom, cellSize
+						* zoom));
 				grid.add(jc);
 			}
 		}
