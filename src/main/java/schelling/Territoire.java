@@ -27,6 +27,22 @@ public class Territoire implements Environnement {
 		grille = new Case[taille][taille];
 		remplirGrilleAvecCasesVides();
 		setPopulation(nombreVert, nombreRouge, tauxSatisfaction);
+		calculTaux();
+	}
+
+	private void calculTaux() {
+		for (final Coordonnees coord : coordonneesDeLaGrille) {
+			final Case current = getCaseFromCoordonnees(coord);
+			if (current.isNotVide()) {
+				((Human) current.getAgent()).calculActualTaux();
+			}
+		}
+	}
+
+	public Territoire(final int taille, final int remplissageTaux,
+			final int tauxSatisfaction) {
+		this(taille, (taille * taille) * remplissageTaux / 200,
+				(taille * taille) * remplissageTaux / 200, tauxSatisfaction);
 	}
 
 	private void setPopulation(final int nombreVert, final int nombreRouge,
@@ -37,6 +53,13 @@ public class Territoire implements Environnement {
 			final Coordonnees currentCoord = coordonneesDeLaGrille.get(p);
 			grille[currentCoord.getX()][currentCoord.getY()].setAgent(new Red(
 					currentCoord, tauxSatisfaction, this));
+		}
+
+		for (p = 0; p < nombreVert; p++) {
+			final Coordonnees currentCoord = coordonneesDeLaGrille.get(p
+					+ nombreRouge);
+			grille[currentCoord.getX()][currentCoord.getY()]
+					.setAgent(new Green(currentCoord, tauxSatisfaction, this));
 		}
 	}
 
