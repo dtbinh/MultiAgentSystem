@@ -26,7 +26,6 @@ public abstract class Human extends Agent {
 
 	@Override
 	public void action() {
-		System.out.println(actualTaux);
 		if (aDejaJoue) {
 			return;
 		}
