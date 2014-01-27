@@ -1,35 +1,40 @@
 package main;
 
-import particles.Plateau;
 import particles.StatParticules;
+import schelling.Territoire;
 import core.Environnement;
 import core.Statistique;
 import core.Systeme;
 import core.Vue;
 
-public class Particles {
-	public static void main(final String[] args) throws InterruptedException {
+public class Segregation {
+
+	public static void main(final String[] args) {
 		final int tailleEnv = 30;
 		final int tailleVue = 600;
 		final int tailleCase = 10;
-		final int nombreBille = 20;
+		final int nombreVert = 40;
+		final int nombreRouge = 40;
+		final int tauxSatisfaction = 30;
 		final long pourcentageAffichage = 10;
 		final long tempsAttenteAffichage = 500;
 
-		final Environnement plateau = new Plateau(tailleEnv, nombreBille);
-		final Vue vue = new Vue(plateau, tailleVue, tailleVue, tailleCase);
-		final Systeme systeme = new Systeme(vue, plateau);
+		final Environnement territoire = new Territoire(tailleEnv, nombreVert,
+				nombreRouge, tauxSatisfaction);
+		final Vue vue = new Vue(territoire, tailleVue, tailleVue, tailleCase);
+		final Systeme systeme = new Systeme(vue, territoire);
 
 		final Statistique stat = StatParticules.getInstance();
-		stat.setEnvironnement(plateau);
+		stat.setEnvironnement(territoire);
 		stat.setFile("ParticleStat.csv");
 
 		systeme.setStatistique(stat);
 		systeme.setWaitingTime(tempsAttenteAffichage);
 		systeme.setSpeed(pourcentageAffichage);
-		plateau.setSysteme(systeme);
+		territoire.setSysteme(systeme);
 		vue.setVisible(true);
 		systeme.run();
 
 	}
+
 }

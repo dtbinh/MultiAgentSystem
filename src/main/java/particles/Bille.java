@@ -16,29 +16,30 @@ public class Bille extends Agent {
 	public Bille(final Coordonnees coordonnees,
 			final Environnement environnement) {
 		super(coordonnees, environnement, new Color(
-				(int) (Math.random() * 256), (int) (Math.random() * 256),
-				(int) (Math.random() * 256)));
-		// direction = Direction.getRandomDirection();
-		direction = new Direction(1, 1);
+				(int) (Math.random() * 200) + 30,
+				(int) (Math.random() * 200) + 30,
+				(int) (Math.random() * 200) + 30));
+		direction = Direction.getRandomDirection();
 	}
 
 	@Override
 	public void action() {
-		System.out.println("***********JE JOUE*********");
 		if (aDejaJoue) {
 			return;
 		}
+
 		final int thisX = coordonnees.getX();
 		final int thisY = coordonnees.getY();
-		Case next = null;
-		do {
-			next = environnement.getCaseFromCoordonnees(
-					thisX + direction.getX(), thisY + direction.getY());
+		// aDejaJoue = true;
+		final Case next = environnement.getCaseFromCoordonnees(thisX
+				+ direction.getX(), thisY + direction.getY());
 
+		if (next.isVide()) {
+			move(next);
+		} else {
 			direction.getRebound(next.getCoordonnees(),
 					environnement.getTailleSup() + 1);
-		} while (next.isNotVide());
-		move(next);
+		}
 	}
 
 	private void move(final Case next) {

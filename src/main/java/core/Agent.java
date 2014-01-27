@@ -7,8 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString(exclude = { "environnement" })
 public abstract class Agent {
 
 	protected Environnement environnement;

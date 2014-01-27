@@ -21,10 +21,17 @@ public class Direction {
 	}
 
 	public void getRebound(final Coordonnees next, final int sup) {
+		boolean change = false;
 		if (next.getX() == 0 || next.getX() == sup) {
 			x = -x;
+			change = true;
 		}
 		if (next.getY() == 0 || next.getY() == sup) {
+			y = -y;
+			change = true;
+		}
+		if (!change) {
+			x = -x;
 			y = -y;
 		}
 	}

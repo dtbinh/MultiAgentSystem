@@ -26,12 +26,7 @@ public class Plateau implements Environnement {
 		grille = new Case[taille + 2][taille + 2];
 		initGrille();
 		setWall();
-		// setBille(nombreBille);
-		setBille(1, 1);
-	}
-
-	private void setBille(final int x, final int y) {
-		grille[x][y].setAgent(new Bille(new Coordonnees(x, y), this));
+		setBille(nombreBille);
 	}
 
 	private void setBille(final int nombreBille) {
@@ -75,29 +70,9 @@ public class Plateau implements Environnement {
 	}
 
 	@Override
-	public Case[][] getGrille() {
-		return grille;
-	}
-
-	@Override
-	public Systeme getSysteme() {
-		return systeme;
-	}
-
-	@Override
-	public void setSysteme(final Systeme systeme) {
-		this.systeme = systeme;
-	}
-
-	@Override
 	public List<Coordonnees> getCoordonneesVoisines(
 			final Coordonnees coordonnees) {
 		return null;
-	}
-
-	@Override
-	public List<Coordonnees> getCoordonneesDeLaGrille() {
-		return coordonneesDeLaGrille;
 	}
 
 	@Override
