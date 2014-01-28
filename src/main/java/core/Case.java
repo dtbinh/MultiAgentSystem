@@ -3,7 +3,7 @@ package core;
 import java.awt.Color;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import lombok.Data;
@@ -35,7 +35,9 @@ public class Case {
 	}
 
 	private void setComponent(final Color color) {
-		defaultAffichage = new JLabel();
+		// defaultAffichage = new JLabel();
+		// defaultAffichage = new Circle(color, 5, 3);
+		defaultAffichage = new JPanel();
 		defaultAffichage.setOpaque(true);
 		defaultAffichage.setBackground(color);
 		defaultAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));

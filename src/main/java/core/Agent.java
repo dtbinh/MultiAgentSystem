@@ -3,7 +3,7 @@ package core;
 import java.awt.Color;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import lombok.Data;
@@ -41,8 +41,9 @@ public abstract class Agent {
 	}
 
 	protected void setAffichage() {
-		monAffichage = new JLabel();
-		// monAffichage = new Circle();
+		// monAffichage = new JLabel();
+		// monAffichage = new Circle(color, 5, 3);
+		monAffichage = new JPanel();
 		monAffichage.setBackground(color);
 		monAffichage.setOpaque(true);
 		monAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));

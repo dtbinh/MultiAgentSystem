@@ -15,10 +15,10 @@ public class Segregation {
 		final int tailleCase = 5;
 		final int nombreVert = 40;
 		final int nombreRouge = 40;
-		final int pourcentage = 65;
+		final int pourcentage = 75;
 		final int tauxSatisfaction = 50;
 		final long pourcentageAffichage = 10;
-		final long tempsAttenteAffichage = 500;
+		final long tempsAttenteAffichage = 600;
 
 		// final Environnement territoire = new Territoire(tailleEnv,
 		// nombreVert,
