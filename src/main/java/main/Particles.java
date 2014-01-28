@@ -9,11 +9,11 @@ import core.Vue;
 
 public class Particles {
 	public static void main(final String[] args) throws InterruptedException {
-		final int tailleEnv = 30;
+		final int tailleEnv = 50;
 		final int tailleVue = 600;
 		final int tailleCase = 10;
-		final int nombreBille = 20;
-		final long pourcentageAffichage = 10;
+		final int nombreBille = 250;
+		final long pourcentageAffichage = 20;
 		final long tempsAttenteAffichage = 500;
 
 		final Environnement plateau = new Plateau(tailleEnv, nombreBille);

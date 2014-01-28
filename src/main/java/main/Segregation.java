@@ -12,11 +12,11 @@ public class Segregation {
 	public static void main(final String[] args) {
 		final int tailleEnv = 100;
 		final int tailleVue = 600;
-		final int tailleCase = 5;
+		final int tailleCase = 10;
 		final int nombreVert = 40;
 		final int nombreRouge = 40;
-		final int pourcentage = 75;
-		final int tauxSatisfaction = 50;
+		final int pourcentage = 70;
+		final int tauxSatisfaction = 80;
 		final long pourcentageAffichage = 10;
 		final long tempsAttenteAffichage = 600;
 
