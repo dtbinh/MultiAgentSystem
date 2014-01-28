@@ -19,14 +19,21 @@ public class Case {
 
 	private JComponent defaultAffichage;
 
+	private boolean displayBorder = true;
+
 	/**
 	 * Constructor
 	 * 
 	 * @param coordonnees
 	 */
-	public Case(final Coordonnees coordonnees) {
+	public Case(final Coordonnees coordonnees, boolean display) {
 		this.coordonnees = coordonnees;
+		displayBorder = display;
 		setComponent(Color.WHITE);
+	}
+
+	public Case(final Coordonnees coordonnees) {
+		this(coordonnees, false);
 	}
 
 	public Case(final Coordonnees coordonnees, final Color color) {
@@ -40,7 +47,8 @@ public class Case {
 		defaultAffichage = new JPanel();
 		defaultAffichage.setOpaque(true);
 		defaultAffichage.setBackground(color);
-		defaultAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		if (displayBorder)
+			defaultAffichage.setBorder(new BevelBorder(BevelBorder.LOWERED));
 	}
 
 	/**

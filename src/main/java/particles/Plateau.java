@@ -19,12 +19,12 @@ public class Plateau implements Environnement {
 	protected Systeme systeme;
 	private final List<Coordonnees> coordonneesDeLaGrille = new ArrayList<Coordonnees>();
 
-	public Plateau(final int taille, final int nombreBille) {
+	public Plateau(final int taille, final int nombreBille, boolean b) {
 		tailleSup = taille;
 		tailleInf = 1;
 		// +2 pour ajouter les murs
 		grille = new Case[taille + 2][taille + 2];
-		initGrille();
+		initGrille(b);
 		setWall();
 		setBille(nombreBille);
 	}
@@ -38,11 +38,11 @@ public class Plateau implements Environnement {
 		}
 	}
 
-	private void initGrille() {
+	private void initGrille(boolean b) {
 		for (int x = 1; x < tailleSup + 1; x++) {
 			for (int y = 1; y < tailleSup + 1; y++) {
 				final Coordonnees coordonnees = new Coordonnees(x, y);
-				grille[x][y] = new Case(coordonnees);
+				grille[x][y] = new Case(coordonnees, b);
 				coordonneesDeLaGrille.add(coordonnees);
 			}
 		}

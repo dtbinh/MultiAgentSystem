@@ -2,6 +2,9 @@ package particles;
 
 import java.awt.Color;
 
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+
 import lombok.ToString;
 import core.Agent;
 import core.Case;
@@ -46,6 +49,13 @@ public class Bille extends Agent {
 		getCurrentCase().setAgent(null);
 		setCoordonnees(next.getCoordonnees());
 		next.setAgent(this);
+	}
+
+	protected void setAffichage() {
+		monAffichage = new JPanel();
+		monAffichage.setBackground(color);
+		monAffichage.setOpaque(true);
+
 	}
 
 }
